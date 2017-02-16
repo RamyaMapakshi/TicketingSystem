@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketingSystem.DB", "TicketingSystem.DB\TicketingSystem.DB.csproj", "{C0F599B1-2D7F-4045-8975-C9567F364328}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketingSystem.Console", "TicketingSystem.Console\TicketingSystem.Console.csproj", "{42D80F56-96B3-4468-8A90-35E715342A97}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0F599B1-2D7F-4045-8975-C9567F364328}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0F599B1-2D7F-4045-8975-C9567F364328}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0F599B1-2D7F-4045-8975-C9567F364328}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0F599B1-2D7F-4045-8975-C9567F364328}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42D80F56-96B3-4468-8A90-35E715342A97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42D80F56-96B3-4468-8A90-35E715342A97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42D80F56-96B3-4468-8A90-35E715342A97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42D80F56-96B3-4468-8A90-35E715342A97}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
