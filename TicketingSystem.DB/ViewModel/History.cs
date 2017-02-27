@@ -19,7 +19,6 @@ namespace TicketingSystem.DB.ViewModel
         public DateTime? ActionDateTime { get; set; }
 
         public int? TicketId { get; set; }
-        public string Status { get; set; }
 
         public int? PreviousHistoryId { get; set; }
 

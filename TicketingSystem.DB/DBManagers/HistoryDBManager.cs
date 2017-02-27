@@ -21,7 +21,6 @@ namespace TicketingSystem.DB.DBManagers
                     ActionType = history.ActionType.ToString(),
                     PreviousHistoryId = history.PreviousHistoryId,
                     TicketId = history.TicketId,
-                    Status = history.Status
                 };
                 if (history.ID == 0)
                 {
@@ -54,7 +53,7 @@ namespace TicketingSystem.DB.DBManagers
         }
         public void ComapreChangesInTicket(ViewModel.Ticket ticket, ViewModel.Ticket oldTicket)
         {
-            foreach (var history in GetChnagedValueHistory(ticket,oldTicket))
+            foreach (var history in GetChnagedValueHistory(ticket, oldTicket))
             {
                 UpsertHistory(history);
             }
@@ -66,9 +65,135 @@ namespace TicketingSystem.DB.DBManagers
 
             foreach (var newItemProperty in newTicket.GetType().GetProperties())
             {
+                if (newItemProperty.Name.Equals("Created")|| newItemProperty.Name.Equals("CreatedBy")|| newItemProperty.Name.Equals("Modified") || newItemProperty.Name.Equals("ModifiedBy"))
+                {
+                    continue;
+                }
                 var newValue = newItemProperty.GetValue(newTicket);
                 var oldValue = oldTicket.GetType().GetProperties().FirstOrDefault(x => x.Name == newItemProperty.Name).GetValue(oldTicket);
-                if (newValue != oldValue)
+                bool isValuesEqual = true;
+                if (newValue == null && oldValue != null)
+                {
+                    newValue = "Empty";
+                    if (oldValue.GetType() == typeof(string))
+                    {
+                        isValuesEqual = newValue.Equals(oldValue);
+                    }
+                    else if (oldValue.GetType() == typeof(Int32))
+                    {
+                        oldValue = Convert.ToString(oldValue);
+                        isValuesEqual = newValue.Equals(oldValue);
+                    }
+                    else if (oldValue.GetType() == typeof(ViewModel.User))
+                    {
+                        ViewModel.User oldUserValue = (ViewModel.User)oldValue;
+                        oldValue = oldUserValue.Name;
+                    }
+                    else if (oldValue.GetType() == typeof(ViewModel.Priority))
+                    {
+                        ViewModel.Priority oldUserValue = (ViewModel.Priority)oldValue;
+                        oldValue = oldUserValue.Title;
+                    }
+                    else if (oldValue.GetType() == typeof(ViewModel.Status))
+                    {
+                        ViewModel.Status oldUserValue = (ViewModel.Status)oldValue;
+                        oldValue = oldUserValue.Title;
+                    }
+                    else if (oldValue.GetType() == typeof(ViewModel.TicketType))
+                    {
+                        ViewModel.TicketType oldUserValue = (ViewModel.TicketType)oldValue;
+                        oldValue = oldUserValue.Title;
+                    }
+                    else if (oldValue.GetType() == typeof(ViewModel.Category))
+                    {
+                        ViewModel.Category oldUserValue = (ViewModel.Category)oldValue;
+                        oldValue = oldUserValue.Title;
+                    }
+                    oldValue = string.IsNullOrEmpty(Convert.ToString(oldValue)) ? "Empty" : Convert.ToString(oldValue);
+                    isValuesEqual = newValue.Equals(oldValue);
+                }
+                else if (newValue != null && oldValue == null)
+                {
+                    oldValue = "Empty";
+                    if (newValue.GetType() == typeof(string))
+                    {
+                        isValuesEqual = newValue.Equals(oldValue);
+                    }
+                    else if (newValue.GetType() == typeof(Int32))
+                    {
+                        newValue = Convert.ToString(newValue);
+                        isValuesEqual = newValue.Equals(oldValue);
+                    }
+                    else if (newValue.GetType() == typeof(ViewModel.User))
+                    {
+                        ViewModel.User newUserValue = (ViewModel.User)newValue;
+                        newValue = newUserValue.Name;
+                    }
+                    else if (newValue.GetType() == typeof(ViewModel.Priority))
+                    {
+                        ViewModel.Priority newUserValue = (ViewModel.Priority)newValue;
+                        newValue = newUserValue.Title;
+                    }
+                    else if (newValue.GetType() == typeof(ViewModel.Status))
+                    {
+                        ViewModel.Status newUserValue = (ViewModel.Status)newValue;
+                        newValue = newUserValue.Title;
+                    }
+                    else if (newValue.GetType() == typeof(ViewModel.TicketType))
+                    {
+                        ViewModel.TicketType newUserValue = (ViewModel.TicketType)newValue;
+                        newValue = newUserValue.Title;
+                    }
+                    else if (newValue.GetType() == typeof(ViewModel.Category))
+                    {
+                        ViewModel.Category newUserValue = (ViewModel.Category)newValue;
+                        newValue = newUserValue.Title;
+                    }
+                    oldValue = string.IsNullOrEmpty(Convert.ToString(oldValue)) ? "Empty" : Convert.ToString(oldValue);
+                    isValuesEqual = newValue.Equals(oldValue);
+                }
+                else if (newValue != null && oldValue != null)
+                {
+                    if (newValue.GetType() == typeof(ViewModel.User))
+                    {
+                        ViewModel.User newUserValue = (ViewModel.User)newValue;
+                        ViewModel.User oldUserValue = (ViewModel.User)oldValue;
+                        newValue = newUserValue.Name;
+                        oldValue = oldUserValue.Name;
+                    }
+                    else if (newValue.GetType() == typeof(ViewModel.Priority))
+                    {
+                        ViewModel.Priority newUserValue = (ViewModel.Priority)newValue;
+                        ViewModel.Priority oldUserValue = (ViewModel.Priority)oldValue;
+                        newValue = newUserValue.Title;
+                        oldValue = oldUserValue.Title;
+                    }
+                    else if (newValue.GetType() == typeof(ViewModel.Status))
+                    {
+                        ViewModel.Status newUserValue = (ViewModel.Status)newValue;
+                        ViewModel.Status oldUserValue = (ViewModel.Status)oldValue;
+                        newValue = newUserValue.Title;
+                        oldValue = oldUserValue.Title;
+                    }
+                    else if (newValue.GetType() == typeof(ViewModel.TicketType))
+                    {
+                        ViewModel.TicketType newUserValue = (ViewModel.TicketType)newValue;
+                        ViewModel.TicketType oldUserValue = (ViewModel.TicketType)oldValue;
+                        newValue = newUserValue.Title;
+                        oldValue = oldUserValue.Title;
+                    }
+                    else if (newValue.GetType() == typeof(ViewModel.Category))
+                    {
+                        ViewModel.Category newUserValue = (ViewModel.Category)newValue;
+                        ViewModel.Category oldUserValue = (ViewModel.Category)oldValue;
+                        newValue = newUserValue.Title;
+                        oldValue = oldUserValue.Title;
+                    }
+                    newValue = string.IsNullOrEmpty(Convert.ToString(newValue)) ? "Empty" : Convert.ToString(newValue);
+                    oldValue = string.IsNullOrEmpty(Convert.ToString(oldValue)) ? "Empty" : Convert.ToString(oldValue);
+                    isValuesEqual = newValue.Equals(oldValue);
+                }
+                if (!isValuesEqual)
                 {
                     newHistories.Add(new ViewModel.History()
                     {
@@ -76,7 +201,6 @@ namespace TicketingSystem.DB.DBManagers
                         ActionDateTime = DateTime.Now,
                         ActionTakenBy = newTicket.ModifiedBy,
                         PreviousHistoryId = previousHistory.ID,
-                        Status = newTicket.Status.Title,
                         TicketId = newTicket.ID,
                         ActionType = newItemProperty.Name
                     });
@@ -93,7 +217,7 @@ namespace TicketingSystem.DB.DBManagers
             return UpsertHistory(new ViewModel.History()
             {
                 ID = 0,
-                Action = "New ticket created" +((bool)ticket.IsTicketGeneratedViaEmail?" via Email":""),
+                Action = "New ticket created" + ((bool)ticket.IsTicketGeneratedViaEmail ? " via Email" : ""),
                 ActionDateTime = DateTime.Now,
                 ActionTakenBy = ticket.CreatedBy,
                 ActionType = "New Ticket",
@@ -112,7 +236,6 @@ namespace TicketingSystem.DB.DBManagers
                 ActionType = "New Comment",
                 PreviousHistoryId = GetLastHistoryByTicketId(comment.TicketId).ID,
                 TicketId = comment.TicketId,
-                Status = StatusDBManager.GetTicketStatusById(comment.TicketId)
             });
         }
         public bool CreateNewAttachmentHistory(ViewModel.Attachment attachment)
@@ -126,7 +249,6 @@ namespace TicketingSystem.DB.DBManagers
                 ActionType = "New Attachment",
                 PreviousHistoryId = GetLastHistoryByTicketId(attachment.TicketId).ID,
                 TicketId = attachment.TicketId,
-                Status = StatusDBManager.GetTicketStatusById(attachment.TicketId)
             });
         }
         public List<ViewModel.History> ConvertToViewModelObjects(List<Database.History> dBComments)

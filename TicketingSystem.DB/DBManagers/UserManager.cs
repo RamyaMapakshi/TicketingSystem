@@ -8,7 +8,7 @@ namespace TicketingSystem.DB.DBManagers
 {
     public class UserManager
     {
-        public bool UpsertUser(ViewModel.User user)
+        public int UpsertUser(ViewModel.User user)
         {
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {
@@ -17,7 +17,8 @@ namespace TicketingSystem.DB.DBManagers
                 {
                     context.Users.Add(userToBeUpdated);
                 }
-                return Convert.ToBoolean(context.SaveChanges());
+                context.SaveChanges();
+                return userToBeUpdated.ID;
             }
         }
         public ViewModel.User ConverToViewModelObject(Database.User user)
@@ -38,11 +39,18 @@ namespace TicketingSystem.DB.DBManagers
                 PhoneNumber = user.PhoneNumber
             };
         }
+        public ViewModel.User GetUserByEmail(string email)
+        {
+            using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
+            {
+                return ConverToViewModelObject(context.Users.FirstOrDefault(x=>x.Email==email));
+            }
+        }
         public ViewModel.User GetUserById(int id)
         {
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {
-                return ConverToViewModelObject(context.Users.FirstOrDefault());
+                return ConverToViewModelObject(context.Users.FirstOrDefault(x=>x.ID==id));
             }
         }
         public Database.User ConvertToDatabaseObject(ViewModel.User user)

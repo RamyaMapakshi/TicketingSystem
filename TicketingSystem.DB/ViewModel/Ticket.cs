@@ -18,6 +18,7 @@ namespace TicketingSystem.DB.ViewModel
         public Category Category { get; set; }
 
         public string Description { get; set; }
+        public string Tags { get; set; }
 
         public Priority Priority { get; set; }
 
@@ -58,5 +59,11 @@ namespace TicketingSystem.DB.ViewModel
         public List<Attachment> Attachments { get; set; }
         public List<Comment> Comments { get; set; }
         public List<History> Histories { get; set; }
+        public Ticket()
+        {
+            this.Attachments = new List<Attachment>();
+            this.Comments = new List<Comment>();
+            this.Histories = new List<History>();
+        }
     }
 }

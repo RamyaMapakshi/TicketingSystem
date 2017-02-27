@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TicketingSystem.DB.Classes;
 using TicketingSystem.DB.DBManagers;
 using TicketingSystem.DB.ViewModel;
 
@@ -14,8 +15,22 @@ namespace TicketingSystem.DB
         {
             return CommonDBManager.TickerDbManager.GetAllTickets();
         }
-        public string UpsertTicketObject(Ticket ticket)
+        public bool UpsertTicketObject(Ticket ticket)
         {
+            foreach (var prop in ticket.GetType().GetProperties())
+            {
+                if (prop.PropertyType == new User().GetType())
+                {
+                    var user = (prop.GetValue(ticket) as User);
+                    if (user != null)
+                    {
+                        if (CommonDBManager.UserManager.GetUserByEmail(user.Email) == null)
+                        {
+                            prop.SetValue(ticket, CommonDBManager.UserManager.UpsertUser(prop.GetValue(ticket) as User));
+                        }
+                    }
+                }
+            }
             ticket = CommonDBManager.TickerDbManager.UpsertTicket(ticket);
             if (ticket.Attachments.Where(x => x.ID == 0).ToList().Count > 0)
             {
@@ -25,7 +40,7 @@ namespace TicketingSystem.DB
                     UploadAttachment(attachment);
                 }
             }
-            if (ticket.Comments.Where(x=>x.ID==0).ToList().Count>0)
+            if (ticket.Comments.Where(x => x.ID == 0).ToList().Count > 0)
             {
                 foreach (var comment in ticket.Comments)
                 {
@@ -33,11 +48,11 @@ namespace TicketingSystem.DB
                     SaveComment(comment);
                 }
             }
-            return "";
+            return true;
         }
         public bool SaveComment(Comment comment)
         {
-            if (comment.Attachment!=null)
+            if (comment.Attachment != null)
             {
                 UploadAttachment(comment.Attachment);
             }
@@ -47,19 +62,19 @@ namespace TicketingSystem.DB
         {
             return CommonDBManager.AttachmentDBManager.UpsertAttachment(attachment);
         }
-        public string UploadAttachments(List<Attachment> attachments)
+        public bool UploadAttachments(List<Attachment> attachments)
         {
             foreach (var attachment in attachments)
             {
                 UploadAttachment(attachment);
             }
-            return "";
+            return true;
         }
         public User GetUserById(int id)
         {
             return CommonDBManager.UserManager.GetUserById(1);
         }
-        
-        
+
+
     }
 }

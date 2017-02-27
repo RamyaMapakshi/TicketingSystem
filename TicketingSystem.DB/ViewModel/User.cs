@@ -14,5 +14,9 @@ namespace TicketingSystem.DB.ViewModel
         public bool? IsExternalUser { get; set; }
         public string PhoneNumber { get; set; }
 
+        public User()
+        {
+            this.IsActive = true;
+        }
     }
 }

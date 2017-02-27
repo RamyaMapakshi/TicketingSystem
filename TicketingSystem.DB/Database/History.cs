@@ -21,7 +21,6 @@ namespace TicketingSystem.DB.Database
         public string ActionType { get; set; }
 
         public string Action { get; set; }
-        public string Status { get; set; }
 
         public int? ActionTakenBy { get; set; }
 

@@ -26,6 +26,18 @@ namespace TicketingSystem.DB.DBManagers
                 return Convert.ToBoolean(context.SaveChanges());
             }
         }
+        public List<ViewModel.Category> GetAllCategories()
+        {
+            List<ViewModel.Category> categories = new List<ViewModel.Category>();
+            using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
+            {
+                foreach (var category in context.Categories)
+                {
+                    categories.Add(ConvertToViewModelObject(category));
+                }
+            }
+            return categories;
+        }
         public ViewModel.Category ConvertToViewModelObject(Database.Category category)
         {
             return new ViewModel.Category()

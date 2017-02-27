@@ -8,7 +8,7 @@ namespace TicketingSystem.DB.Database
     public partial class TicketingSystemDBContext : DbContext
     {
         public TicketingSystemDBContext()
-            : base("name=TicketingSystem")
+            : base("name=TicketingSystemDBContext")
         {
         }
 
@@ -23,6 +23,7 @@ namespace TicketingSystem.DB.Database
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<TicketType> TicketTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Tags> Tags { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
