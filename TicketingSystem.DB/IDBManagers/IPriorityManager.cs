@@ -4,6 +4,6 @@ namespace TicketingSystem.DB.IDBManagers
 {
     public interface IPriorityManager
     {
-        bool UpsertCategory(Priority priority);
+        bool UpsertPriority(Priority priority);
     }
 }

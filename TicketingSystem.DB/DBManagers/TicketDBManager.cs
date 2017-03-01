@@ -13,35 +13,45 @@ namespace TicketingSystem.DB.DBManagers
         public ViewModel.Ticket UpsertTicket(ViewModel.Ticket ticket)
         {
             HistoryDBManager historyDBManager = new HistoryDBManager();
-            Database.Ticket ticketToBeUpdated = new Ticket()
-            {
-                AssignedTechnician = _retrunUserId(ticket.AssignedTechnician),
-                ID = ticket.ID,
-                ClosedBy = _retrunUserId(ticket.ClosedBy),
-                ClosedDate = ticket.ClosedDate,
-                Created = ticket.Created,
-                CreatedBy = (int)_retrunUserId(ticket.CreatedBy),
-                Description = ticket.Description,
-                Tags = ticket.Tags,
-                DueDate = ticket.DueDate,
-                DuplicateTicketID = ticket.DuplicateTicketID,
-                ExpectedCompletionDate = ticket.ExpectedCompletionDate,
-                IsActive = ticket.IsActive,
-                IsDuplicate = ticket.IsDuplicate,
-                IsEscalated = ticket.IsEscalated,
-                IsTicketGeneratedViaEmail = ticket.IsTicketGeneratedViaEmail,
-                Modified = ticket.Modified,
-                ModifiedBy = (int)_retrunUserId(ticket.ModifiedBy),
-                TicketPriority = ticket.Priority.ID,
-                TicketCategory = ticket.Category.ID,
-                TicketStatus = ticket.Status.ID,
-                TicketType = ticket.Type.ID,
-                RequestedBy = (int)_retrunUserId(ticket.RequestedBy),
-                ResolvedBy = _retrunUserId(ticket.ResolvedBy),
-                ResolvedDate = ticket.ResolvedDate,
-            };
+            Database.Ticket ticketToBeUpdated = new Ticket();
             using (Database.TicketingSystemDBContext context = new TicketingSystemDBContext())
             {
+                if (ticket.ID == 0)
+                {
+                    ticketToBeUpdated.TicketStatus = ticketToBeUpdated.TicketStatus == 0 ? context.Status.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketStatus;
+                    ticketToBeUpdated.TicketPriority = ticketToBeUpdated.TicketPriority == 0 ? context.Priorities.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketPriority;
+                    ticketToBeUpdated.TicketCategory = ticketToBeUpdated.TicketCategory == 0 ? context.Categories.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketCategory;
+                    ticketToBeUpdated.TicketType = ticketToBeUpdated.TicketType == 0 ? context.TicketTypes.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketType;
+                }
+                else
+                {
+                    ticketToBeUpdated.TicketPriority = ticket.Priority.ID;
+                    ticketToBeUpdated.TicketCategory = ticket.Category.ID;
+                    ticketToBeUpdated.TicketStatus = ticket.Status.ID;
+                    ticketToBeUpdated.TicketType = ticket.Type.ID;
+                }
+                ticketToBeUpdated.AssignedTechnician = _retrunUserId(ticket.AssignedTechnician);
+                ticketToBeUpdated.ID = ticket.ID;
+                ticketToBeUpdated.ClosedBy = _retrunUserId(ticket.ClosedBy);
+                ticketToBeUpdated.ClosedDate = ticket.ClosedDate;
+                ticketToBeUpdated.Created = ticket.Created;
+                ticketToBeUpdated.CreatedBy = (int)_retrunUserId(ticket.CreatedBy);
+                ticketToBeUpdated.Description = ticket.Description;
+                ticketToBeUpdated.Tags = ticket.Tags;
+                ticketToBeUpdated.DueDate = ticket.DueDate;
+                ticketToBeUpdated.DuplicateTicketID = ticket.DuplicateTicketID;
+                ticketToBeUpdated.ExpectedCompletionDate = ticket.ExpectedCompletionDate;
+                ticketToBeUpdated.IsActive = ticket.IsActive;
+                ticketToBeUpdated.IsDuplicate = ticket.IsDuplicate;
+                ticketToBeUpdated.IsEscalated = ticket.IsEscalated;
+                ticketToBeUpdated.IsTicketGeneratedViaEmail = ticket.IsTicketGeneratedViaEmail;
+                ticketToBeUpdated.Modified = ticket.Modified;
+                ticketToBeUpdated.ModifiedBy = (int)_retrunUserId(ticket.ModifiedBy);
+                ticketToBeUpdated.RequestedBy = (int)_retrunUserId(ticket.RequestedBy);
+                ticketToBeUpdated.RequestedFor = (int)_retrunUserId(ticket.RequestedFor);
+                ticketToBeUpdated.ResolvedBy = _retrunUserId(ticket.ResolvedBy);
+                ticketToBeUpdated.ResolvedDate = ticket.ResolvedDate;
+
                 if (ticket.ID == 0)
                 {
                     ticketToBeUpdated.Created = DateTime.Now;
@@ -89,7 +99,7 @@ namespace TicketingSystem.DB.DBManagers
                 return ConvertToViewModelObject(context.Tickets.FirstOrDefault(x => x.ID == id));
             }
         }
-       
+
         public ViewModel.Ticket ConvertToViewModelObject(Database.Ticket ticket)
         {
             return new ViewModel.Ticket()

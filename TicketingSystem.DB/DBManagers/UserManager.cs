@@ -9,7 +9,7 @@ namespace TicketingSystem.DB.DBManagers
 {
     public class UserManager:IUserManager
     {
-        public int UpsertUser(ViewModel.User user)
+        public ViewModel.User UpsertUser(ViewModel.User user)
         {
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {
@@ -19,7 +19,7 @@ namespace TicketingSystem.DB.DBManagers
                     context.Users.Add(userToBeUpdated);
                 }
                 context.SaveChanges();
-                return userToBeUpdated.ID;
+                return ConverToViewModelObject(userToBeUpdated);
             }
         }
         public ViewModel.User ConverToViewModelObject(Database.User user)

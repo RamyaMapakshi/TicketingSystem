@@ -252,10 +252,10 @@ namespace TicketingSystem.DB.DBManagers
                 TicketId = attachment.TicketId,
             });
         }
-        public List<ViewModel.History> ConvertToViewModelObjects(List<Database.History> dBComments)
+        public List<ViewModel.History> ConvertToViewModelObjects(List<Database.History> dbHistory)
         {
             List<ViewModel.History> histories = new List<ViewModel.History>();
-            foreach (var history in dBComments)
+            foreach (var history in dbHistory)
             {
                 histories.Add(ConvertToViewModelObject(history));
             }

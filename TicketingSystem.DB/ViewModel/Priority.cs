@@ -11,6 +11,7 @@ namespace TicketingSystem.DB.ViewModel
         public int? DaysDue { get; set; }
 
         public string Color { get; set; }
+        public bool? IsDefault { get; set; }
 
         public bool? IsActive { get; set; }
 

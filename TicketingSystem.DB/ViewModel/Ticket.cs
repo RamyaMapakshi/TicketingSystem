@@ -26,6 +26,8 @@ namespace TicketingSystem.DB.ViewModel
 
         public TicketType Type { get; set; }
 
+        public string EmailsToNotify { get; set; }
+        public string Notes { get; set; }
         public User AssignedTechnician { get; set; }
 
         public bool? IsEscalated { get; set; }

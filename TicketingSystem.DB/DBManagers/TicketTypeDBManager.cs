@@ -19,7 +19,19 @@ namespace TicketingSystem.DB.DBManagers
                 IsActive = ticketType.IsActive
             };
         }
-        public bool UpsertCategory(ViewModel.TicketType ticketType)
+        public List<ViewModel.TicketType> GetAllTicketTypes()
+        {
+            List<ViewModel.TicketType> ticketTypeList = new List<ViewModel.TicketType>();
+            using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
+            {
+                foreach (var types in context.TicketTypes)
+                {
+                    ticketTypeList.Add(CommonDBManager.TicketTypeDBManager.ConvertToViewModelObject(types));
+                }
+            }
+            return ticketTypeList;
+        }
+        public bool UpsertTicketType(ViewModel.TicketType ticketType)
         {
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {

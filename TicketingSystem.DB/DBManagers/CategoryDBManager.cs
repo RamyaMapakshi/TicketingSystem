@@ -39,6 +39,7 @@ namespace TicketingSystem.DB.DBManagers
             }
             return categories;
         }
+        
         public ViewModel.Category ConvertToViewModelObject(Database.Category category)
         {
             return new ViewModel.Category()

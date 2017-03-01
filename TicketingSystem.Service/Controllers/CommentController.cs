@@ -6,18 +6,17 @@ using System.Net.Http;
 using System.Web.Http;
 using TicketingSystem.DB;
 using TicketingSystem.DB.ViewModel;
-using TicketingSystem.Service.Models;
 
 namespace TicketingSystem.Service.Controllers
 {
-    public class TicketController : ApiController
+    public class CommentController : ApiController
     {
         IDBManager dbManager;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="dbManager"></param>
-        public TicketController(IDBManager dbManager)
+        public CommentController(IDBManager dbManager)
         {
             this.dbManager = dbManager;
         }
@@ -25,27 +24,24 @@ namespace TicketingSystem.Service.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="ticket"></param>
+        /// <param name="comment"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/CreateTicketWithBasicInfo/")]
-        public bool CreateTicket([FromBody]NewTicketCreationInfoBasic ticket)
+        [Route("api/Comment/SaveComment/")]
+        public bool SaveComment([FromBody]Comment comment)
         {
-            return dbManager.UpsertTicketObject(ticket.CreateTicketFromBasicTicketInfo());
+            return dbManager.SaveComment(comment);
         }
 
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="ticketId"></param>
         /// <returns></returns>
-        [Route("api/GetAllTickets/")]
-        public List<Ticket> GetAllTickets()
+        [Route("api/Comment/GetCommentsByTicketId/{ticketId}")]
+        public List<Comment> GetCommentsByTicketId(int ticketId)
         {
-            return dbManager.GetAllTickets();
+            return dbManager.GetCommentsByTicketId(ticketId);
         }
-        
-        
-        
-        
     }
 }

@@ -9,7 +9,7 @@ namespace TicketingSystem.DB.DBManagers
 {
     public class PriorityDBManager : IPriorityManager
     {
-        public bool UpsertCategory(ViewModel.Priority priority)
+        public bool UpsertPriority(ViewModel.Priority priority)
         {
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {
@@ -28,6 +28,18 @@ namespace TicketingSystem.DB.DBManagers
                 }
                 return Convert.ToBoolean(context.SaveChanges());
             }
+        }
+        public List<ViewModel.Priority> GetAllPriorities()
+        {
+            List<ViewModel.Priority> priorityList = new List<ViewModel.Priority>();
+            using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
+            {
+                foreach (var priority in context.Priorities)
+                {
+                    priorityList.Add(CommonDBManager.PriorityDBManager.ConvertToViewModelObject(priority));
+                }
+            }
+            return priorityList;
         }
         public ViewModel.Priority ConvertToViewModelObject(Database.Priority priority)
         {

@@ -4,6 +4,6 @@ namespace TicketingSystem.DB.IDBManagers
 {
     public interface ITicketTypeManager
     {
-        bool UpsertCategory(TicketType ticketType);
+        bool UpsertTicketType(TicketType ticketType);
     }
 }

@@ -20,13 +20,25 @@ namespace TicketingSystem.DB.DBManagers
                 IsActive = status.IsActive
             };
         }
-        public static string GetTicketStatusById(int id)
+        public string GetTicketStatusById(int id)
         {
             TicketDBManager ticketDBManager = new TicketDBManager();
             using (TicketingSystemDBContext context = new TicketingSystemDBContext())
             {
                 return ticketDBManager.ConvertToViewModelObject(context.Tickets.FirstOrDefault(x => x.ID == id)).Status.Title;
             }
+        }
+        public List<ViewModel.Status> GetAllStatus()
+        {
+            List<ViewModel.Status> statusList = new List<ViewModel.Status>();
+            using (TicketingSystemDBContext context = new TicketingSystemDBContext())
+            {
+                foreach (var status in context.Status)
+                {
+                    statusList.Add(CommonDBManager.StatusDBManager.ConvertToViewModelObject(status));
+                }
+            }
+            return statusList;
         }
         public bool UpsertStatus(ViewModel.Status status)
         {

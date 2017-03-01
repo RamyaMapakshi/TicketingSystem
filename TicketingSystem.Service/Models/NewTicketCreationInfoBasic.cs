@@ -5,16 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using TicketingSystem.DB.ViewModel;
 
-namespace TicketingSystem.DB.Classes.Models
+namespace TicketingSystem.Service.Models
 {
     public class NewTicketCreationInfoBasic
     {
-        public bool IsSelf { get; set; }
         public User RequestedBy { get; set; }
         public User RequestedFor { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public string[] EmailsToNotify { get; set; }
+        public string EmailsToNotify { get; set; }
         public List<Attachment> Attachments { get; set; }
         public NewTicketCreationInfoBasic()
         {
@@ -33,13 +32,8 @@ namespace TicketingSystem.DB.Classes.Models
                 ModifiedBy = this.RequestedBy,
                 RequestedBy = this.RequestedBy,
                 RequestedFor = this.RequestedFor,
-                Attachments = this.Attachments
+                Attachments = this.Attachments,
             };
-        }
-        public bool CreateANewTicket()
-        {
-            DBManager db = new DBManager();
-            return db.UpsertTicketObject(CreateTicketFromBasicTicketInfo());
         }
     }
 }

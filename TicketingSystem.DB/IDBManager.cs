@@ -5,12 +5,21 @@ namespace TicketingSystem.DB
 {
     public interface IDBManager
     {
+        bool UpsertStatus(Status status);
+        bool UpsertCategory(Category category);
+        bool UpsertTicketType(TicketType type);
+        bool UpsertPriority(Priority priority);
         List<Ticket> GetAllTickets();
         User GetUserById(int id);
         bool SaveComment(Comment comment);
         bool UploadAttachment(Attachment attachment);
         bool UploadAttachments(List<Attachment> attachments);
         bool UpsertTicketObject(Ticket ticket);
-        bool UpsertStatus(Status status);
+        List<Comment> GetCommentsByTicketId(int ticketId);
+        List<ViewModel.History> GetHistoriesByTicketId(int ticketId);
+        List<ViewModel.TicketType> GetAllTicketTypes();
+        List<ViewModel.Status> GetAllStatus();
+        List<ViewModel.Category> GetAllCategories();
+        List<ViewModel.Priority> GetAllPriorities();
     }
 }

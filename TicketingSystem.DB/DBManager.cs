@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TicketingSystem.DB.Classes;
 using TicketingSystem.DB.DBManagers;
 using TicketingSystem.DB.ViewModel;
 
@@ -11,9 +10,22 @@ namespace TicketingSystem.DB
 {
     public class DBManager : IDBManager
     {
+        
         public bool UpsertStatus(Status status)
         {
             return CommonDBManager.StatusDBManager.UpsertStatus(status);
+        }
+        public bool UpsertCategory(Category category)
+        {
+            return CommonDBManager.CategoryDBManager.UpsertCategory(category);
+        }
+        public bool UpsertTicketType(TicketType type)
+        {
+            return CommonDBManager.TicketTypeDBManager.UpsertTicketType(type);
+        }
+        public bool UpsertPriority(Priority priority)
+        {
+            return CommonDBManager.PriorityDBManager.UpsertPriority(priority);
         }
         public List<Ticket> GetAllTickets()
         {
@@ -28,9 +40,14 @@ namespace TicketingSystem.DB
                     var user = (prop.GetValue(ticket) as User);
                     if (user != null)
                     {
-                        if (CommonDBManager.UserManager.GetUserByEmail(user.Email) == null)
+                        user = CommonDBManager.UserManager.GetUserByEmail(user.Email);
+                        if ( user== null)
                         {
                             prop.SetValue(ticket, CommonDBManager.UserManager.UpsertUser(prop.GetValue(ticket) as User));
+                        }
+                        else
+                        {
+                            prop.SetValue(ticket, user);
                         }
                     }
                 }
@@ -76,9 +93,35 @@ namespace TicketingSystem.DB
         }
         public User GetUserById(int id)
         {
-            return CommonDBManager.UserManager.GetUserById(1);
+            return CommonDBManager.UserManager.GetUserById(id);
+        }
+        public List<Comment> GetCommentsByTicketId(int ticketId)
+        {
+            return CommonDBManager.CommentDbManager.GetCommentsByTicketId(ticketId);
+        }
+        public List<History> GetHistoriesByTicketId(int ticketId)
+        {
+            return CommonDBManager.HistoryDBManager.GetHistoriesByTicketId(ticketId);
         }
 
+        public List<TicketType> GetAllTicketTypes()
+        {
+            return CommonDBManager.TicketTypeDBManager.GetAllTicketTypes();
+        }
 
+        public List<Status> GetAllStatus()
+        {
+            return CommonDBManager.StatusDBManager.GetAllStatus();
+        }
+
+        public List<Category> GetAllCategories()
+        {
+            return CommonDBManager.CategoryDBManager.GetAllCategories();
+        }
+
+        public List<Priority> GetAllPriorities()
+        {
+            return CommonDBManager.PriorityDBManager.GetAllPriorities();
+        }
     }
 }

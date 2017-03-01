@@ -8,7 +8,7 @@ namespace TicketingSystem.DB.IDBManagers
 {
     public interface IUserManager
     {
-        int UpsertUser(ViewModel.User user);
+        ViewModel.User UpsertUser(ViewModel.User user);
         ViewModel.User GetUserByEmail(string email);
         ViewModel.User GetUserById(int id);
     }

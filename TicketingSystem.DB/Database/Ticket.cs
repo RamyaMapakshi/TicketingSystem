@@ -30,6 +30,8 @@ namespace TicketingSystem.DB.Database
         public string Tags { get; set; }
 
         public int? TicketPriority { get; set; }
+        public string Notes { get; set; }
+        public string EmailsToNotify { get; set; }
 
         public DateTime? DueDate { get; set; }
 
