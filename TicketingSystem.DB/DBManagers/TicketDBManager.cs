@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TicketingSystem.DB.Database;
+using TicketingSystem.DB.IDBManagers;
 
 namespace TicketingSystem.DB.DBManagers
 {
-    public class TicketDBManager
+    public class TicketDBManager : ITicketManager
     {
         public ViewModel.Ticket UpsertTicket(ViewModel.Ticket ticket)
         {

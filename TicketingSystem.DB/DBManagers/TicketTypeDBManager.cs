@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TicketingSystem.DB.IDBManagers;
 
 namespace TicketingSystem.DB.DBManagers
 {
-    public class TicketTypeDBManager
+    public class TicketTypeDBManager : ITicketTypeManager
     {
         public ViewModel.TicketType ConvertToViewModelObject(Database.TicketType ticketType)
         {

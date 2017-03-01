@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TicketingSystem.DB.Database;
+using TicketingSystem.DB.IDBManagers;
 
 namespace TicketingSystem.DB.DBManagers
 {
-    public class StatusDBManager
+    public class StatusDBManager : IStatusManager
     {
         public ViewModel.Status ConvertToViewModelObject(Database.Status status)
         {
@@ -27,7 +28,7 @@ namespace TicketingSystem.DB.DBManagers
                 return ticketDBManager.ConvertToViewModelObject(context.Tickets.FirstOrDefault(x => x.ID == id)).Status.Title;
             }
         }
-        public bool UpsertCategory(ViewModel.Status status)
+        public bool UpsertStatus(ViewModel.Status status)
         {
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {

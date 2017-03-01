@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TicketingSystem.DB.IDBManagers;
 
 namespace TicketingSystem.DB.DBManagers
 {
-    public class PriorityDBManager
+    public class PriorityDBManager : IPriorityManager
     {
         public bool UpsertCategory(ViewModel.Priority priority)
         {

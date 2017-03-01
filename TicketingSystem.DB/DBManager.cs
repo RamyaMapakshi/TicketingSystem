@@ -9,8 +9,12 @@ using TicketingSystem.DB.ViewModel;
 
 namespace TicketingSystem.DB
 {
-    public class DBManager
+    public class DBManager : IDBManager
     {
+        public bool UpsertStatus(Status status)
+        {
+            return CommonDBManager.StatusDBManager.UpsertStatus(status);
+        }
         public List<Ticket> GetAllTickets()
         {
             return CommonDBManager.TickerDbManager.GetAllTickets();
