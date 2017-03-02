@@ -56,8 +56,10 @@
     <Compile Include="Database\Comment.cs" />
     <Compile Include="Database\EmailParsingRule.cs" />
     <Compile Include="Database\History.cs" />
+    <Compile Include="Database\Impact.cs" />
     <Compile Include="Database\Priority.cs" />
     <Compile Include="Database\Status.cs" />
+    <Compile Include="Database\SubCategory.cs" />
     <Compile Include="Database\sysdiagram.cs" />
     <Compile Include="Database\Tags.cs" />
     <Compile Include="Database\Ticket.cs" />

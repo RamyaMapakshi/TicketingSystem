@@ -13,7 +13,9 @@ namespace TicketingSystem.DB.Database
         }
 
         public virtual DbSet<Attachment> Attachments { get; set; }
+        public virtual DbSet<Impact> Impacts { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<SubCategory> SubCategories { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<EmailParsingRule> EmailParsingRules { get; set; }
         public virtual DbSet<History> Histories { get; set; }
@@ -31,6 +33,16 @@ namespace TicketingSystem.DB.Database
                 .HasMany(e => e.Tickets)
                 .WithOptional(e => e.Category)
                 .HasForeignKey(e => e.TicketCategory);
+
+            modelBuilder.Entity<SubCategory>()
+                .HasMany(e => e.Tickets)
+                .WithOptional(e => e.SubCategory)
+                .HasForeignKey(e => e.TicketSubCategory);
+
+            modelBuilder.Entity<Impact>()
+                .HasMany(e => e.Tickets)
+                .WithOptional(e => e.Impact)
+                .HasForeignKey(e => e.TicketImpact);
 
 
             modelBuilder.Entity<History>()

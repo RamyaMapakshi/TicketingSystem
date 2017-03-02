@@ -25,6 +25,8 @@ namespace TicketingSystem.DB.Database
         public int TicketStatus { get; set; }
 
         public int? TicketCategory { get; set; }
+        public int? TicketImpact { get; set; }
+        public int? TicketSubCategory { get; set; }
 
         public string Description { get; set; }
         public string Tags { get; set; }
@@ -71,6 +73,8 @@ namespace TicketingSystem.DB.Database
         public virtual ICollection<Attachment> Attachments { get; set; }
 
         public virtual Category Category { get; set; }
+        public virtual Impact Impact { get; set; }
+        public virtual SubCategory SubCategory { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
