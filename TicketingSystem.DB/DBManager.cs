@@ -31,6 +31,22 @@ namespace TicketingSystem.DB
         {
             return CommonDBManager.TickerDbManager.GetAllTickets();
         }
+        public bool UpsertImpact(Impact impact)
+        {
+            return CommonDBManager.ImpactDBManager.UpsertImpact(impact);
+        }
+        public List<Impact> GetAllImpacts()
+        {
+            return CommonDBManager.ImpactDBManager.GetAllImpacts();
+        }
+        public bool UpsertSubCategory(SubCategory subCategory)
+        {
+            return CommonDBManager.SubCategoryDBManager.UpsertSubCategory(subCategory);
+        }
+        public List<SubCategory> GetAllSubCategory()
+        {
+            return CommonDBManager.SubCategoryDBManager.GetAllsubCategories();
+        }
         public bool UpsertTicketObject(Ticket ticket)
         {
             foreach (var prop in ticket.GetType().GetProperties())
@@ -123,5 +139,6 @@ namespace TicketingSystem.DB
         {
             return CommonDBManager.PriorityDBManager.GetAllPriorities();
         }
+
     }
 }

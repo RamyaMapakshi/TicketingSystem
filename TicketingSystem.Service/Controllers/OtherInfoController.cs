@@ -58,9 +58,53 @@ namespace TicketingSystem.Service.Controllers
         /// </summary>
         /// <returns></returns>
         [Route("api/OtherInfo/Category/GetAllCategories/")]
-        public List<Category> GetAllCategoriies()
+        public List<Category> GetAllCategories()
         {
             return dbManager.GetAllCategories();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/OtherInfo/SubCategory/GetAllSubCategories/")]
+        public List<SubCategory> GetAllSubCategories()
+        {
+            return dbManager.GetAllSubCategory();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Route("api/OtherInfo/Impact/GetAllImpacts/")]
+        public List<Impact> GetAllImpacts()
+        {
+            return dbManager.GetAllImpacts();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="impact"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/OtherInfo/Impact/UpsertImpact/")]
+        public bool UpsertImpact([FromBody]Impact impact)
+        {
+            return dbManager.UpsertImpact(impact);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="SubCategory"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/OtherInfo/SubCategory/UpsertSubCategory/")]
+        public bool UpsertSubCategory([FromBody]SubCategory subCategory)
+        {
+            return dbManager.UpsertSubCategory(subCategory);
         }
 
         /// <summary>

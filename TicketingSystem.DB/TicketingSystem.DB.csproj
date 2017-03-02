@@ -68,10 +68,14 @@
     <Compile Include="Database\User.cs" />
     <Compile Include="DBManager.cs" />
     <Compile Include="DBManagers\AttachmentDBManager.cs" />
+    <Compile Include="IDBManagers\ISubCategoryManager.cs" />
+    <Compile Include="IDBManagers\IImpactManager.cs" />
+    <Compile Include="DBManagers\SubCategoryDBManager.cs" />
     <Compile Include="DBManagers\CategoryDBManager.cs" />
     <Compile Include="DBManagers\CommentDBManager.cs" />
     <Compile Include="DBManagers\CommonDBManager.cs" />
     <Compile Include="DBManagers\HistoryDBManager.cs" />
+    <Compile Include="DBManagers\ImpactDBManager.cs" />
     <Compile Include="IDBManager.cs" />
     <Compile Include="IDBManagers\IPriorityManager.cs" />
     <Compile Include="IDBManagers\IStatusManager.cs" />
@@ -93,8 +97,10 @@
     <Compile Include="ViewModel\Comment.cs" />
     <Compile Include="ViewModel\EmailRule.cs" />
     <Compile Include="ViewModel\History.cs" />
+    <Compile Include="ViewModel\Impact.cs" />
     <Compile Include="ViewModel\Priority.cs" />
     <Compile Include="ViewModel\Status.cs" />
+    <Compile Include="ViewModel\SubCategory.cs" />
     <Compile Include="ViewModel\Ticket.cs" />
     <Compile Include="ViewModel\TicketType.cs" />
     <Compile Include="ViewModel\User.cs" />

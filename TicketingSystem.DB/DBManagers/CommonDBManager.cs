@@ -17,5 +17,7 @@ namespace TicketingSystem.DB.DBManagers
         public static PriorityDBManager PriorityDBManager = new PriorityDBManager();
         public static TicketDBManager TickerDbManager = new TicketDBManager();
         public static HistoryDBManager HistoryDBManager = new HistoryDBManager();
+        public static ImpactDBManager ImpactDBManager = new ImpactDBManager();
+        public static SubCategoryDBManager SubCategoryDBManager = new SubCategoryDBManager();
     }
 }

@@ -10,6 +10,10 @@ namespace TicketingSystem.DB
         bool UpsertTicketType(TicketType type);
         bool UpsertPriority(Priority priority);
         List<Ticket> GetAllTickets();
+        bool UpsertSubCategory(SubCategory subCategory);
+        List<SubCategory> GetAllSubCategory();
+        bool UpsertImpact(Impact impact);
+        List<Impact> GetAllImpacts();
         User GetUserById(int id);
         bool SaveComment(Comment comment);
         bool UploadAttachment(Attachment attachment);
