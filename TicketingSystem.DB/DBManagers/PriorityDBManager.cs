@@ -20,7 +20,8 @@ namespace TicketingSystem.DB.DBManagers
                     Title = priority.Title,
                     Description = priority.Description,
                     Color = priority.Color,
-                    DaysDue = priority.DaysDue
+                    DaysDue = priority.DaysDue,
+                    IsDefault = priority.IsDefault
                 };
                 if (priority.ID == 0)
                 {
@@ -50,7 +51,8 @@ namespace TicketingSystem.DB.DBManagers
                 Title = priority.Title,
                 Description = priority.Description,
                 Color = priority.Color,
-                DaysDue = priority.DaysDue
+                DaysDue = priority.DaysDue,
+                IsDefault = priority.IsDefault
             };
         }
     }

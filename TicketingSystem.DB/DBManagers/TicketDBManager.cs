@@ -19,9 +19,11 @@ namespace TicketingSystem.DB.DBManagers
                 if (ticket.ID == 0)
                 {
                     ticketToBeUpdated.TicketStatus = ticketToBeUpdated.TicketStatus == 0 ? context.Status.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketStatus;
-                    ticketToBeUpdated.TicketPriority = ticketToBeUpdated.TicketPriority == 0 ? context.Priorities.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketPriority;
-                    ticketToBeUpdated.TicketCategory = ticketToBeUpdated.TicketCategory == 0 ? context.Categories.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketCategory;
-                    ticketToBeUpdated.TicketType = ticketToBeUpdated.TicketType == 0 ? context.TicketTypes.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketType;
+                    ticketToBeUpdated.TicketPriority = !ticketToBeUpdated.TicketPriority.HasValue ? context.Priorities.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketPriority;
+                    ticketToBeUpdated.TicketCategory = !ticketToBeUpdated.TicketCategory.HasValue ? context.Categories.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketCategory;
+                    ticketToBeUpdated.TicketType = !ticketToBeUpdated.TicketType.HasValue ? context.TicketTypes.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketType;
+                    ticketToBeUpdated.TicketSubCategory = !ticketToBeUpdated.TicketSubCategory.HasValue ? context.SubCategories.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketSubCategory;
+                    ticketToBeUpdated.TicketImpact = !ticketToBeUpdated.TicketImpact.HasValue ? context.Impacts.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketImpact;
                 }
                 else
                 {
@@ -30,6 +32,8 @@ namespace TicketingSystem.DB.DBManagers
                     ticketToBeUpdated.TicketStatus = ticket.Status.ID;
                     ticketToBeUpdated.TicketType = ticket.Type.ID;
                 }
+                ticketToBeUpdated.Notes = ticket.Notes;
+                ticketToBeUpdated.EmailsToNotify = ticket.EmailsToNotify;
                 ticketToBeUpdated.AssignedTechnician = _retrunUserId(ticket.AssignedTechnician);
                 ticketToBeUpdated.ID = ticket.ID;
                 ticketToBeUpdated.ClosedBy = _retrunUserId(ticket.ClosedBy);
@@ -118,6 +122,8 @@ namespace TicketingSystem.DB.DBManagers
                 IsDuplicate = ticket.IsDuplicate,
                 IsEscalated = ticket.IsEscalated,
                 IsTicketGeneratedViaEmail = ticket.IsTicketGeneratedViaEmail,
+                EmailsToNotify = ticket.EmailsToNotify,
+                Notes = ticket.Notes,
                 AssignedTechnician = CommonDBManager.UserManager.ConverToViewModelObject(ticket._AssignedTechnician),
                 ClosedBy = CommonDBManager.UserManager.ConverToViewModelObject(ticket._ClosedBy),
                 ModifiedBy = CommonDBManager.UserManager.ConverToViewModelObject(ticket._ModifiedBy),

@@ -14,7 +14,9 @@ namespace TicketingSystem.DB
         List<SubCategory> GetAllSubCategory();
         bool UpsertImpact(Impact impact);
         List<Impact> GetAllImpacts();
+        Ticket GetTicketById(int id);
         User GetUserById(int id);
+
         bool SaveComment(Comment comment);
         bool UploadAttachment(Attachment attachment);
         bool UploadAttachments(List<Attachment> attachments);

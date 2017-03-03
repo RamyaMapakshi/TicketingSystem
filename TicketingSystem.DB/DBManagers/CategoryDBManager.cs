@@ -7,7 +7,7 @@ using TicketingSystem.DB.IDBManagers;
 
 namespace TicketingSystem.DB.DBManagers
 {
-    public class CategoryDBManager:ICategoryManager
+    public class CategoryDBManager : ICategoryManager
     {
         public bool UpsertCategory(ViewModel.Category category)
         {
@@ -18,7 +18,8 @@ namespace TicketingSystem.DB.DBManagers
                     ID = category.ID,
                     IsActive = category.IsActive,
                     Title = category.Title,
-                    Description = category.Description
+                    Description = category.Description,
+                    IsDefault = category.IsDefault
                 };
                 if (category.ID == 0)
                 {
@@ -39,7 +40,7 @@ namespace TicketingSystem.DB.DBManagers
             }
             return categories;
         }
-        
+
         public ViewModel.Category ConvertToViewModelObject(Database.Category category)
         {
             return new ViewModel.Category()
@@ -47,7 +48,8 @@ namespace TicketingSystem.DB.DBManagers
                 Description = category.Description,
                 ID = category.ID,
                 Title = category.Title,
-                IsActive = category.IsActive
+                IsActive = category.IsActive,
+                IsDefault = category.IsDefault
             };
         }
     }

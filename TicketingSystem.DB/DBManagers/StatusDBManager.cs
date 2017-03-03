@@ -17,7 +17,8 @@ namespace TicketingSystem.DB.DBManagers
                 Description = status.Description,
                 ID = status.ID,
                 Title = status.Title,
-                IsActive = status.IsActive
+                IsActive = status.IsActive,
+                IsDefault = status.IsDefault
             };
         }
         public string GetTicketStatusById(int id)
@@ -49,7 +50,8 @@ namespace TicketingSystem.DB.DBManagers
                     ID = status.ID,
                     IsActive = status.IsActive,
                     Title = status.Title,
-                    Description = status.Description
+                    Description = status.Description,
+                    IsDefault = status.IsDefault
                 };
                 if (status.ID == 0)
                 {

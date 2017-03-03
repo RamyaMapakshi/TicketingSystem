@@ -18,7 +18,8 @@ namespace TicketingSystem.DB.DBManagers
                     ID = impact.ID,
                     IsActive = impact.IsActive,
                     Title = impact.Title,
-                    Description = impact.Description
+                    Description = impact.Description,
+                    IsDefault = impact.IsDefault
                 };
                 if (impact.ID == 0)
                 {
@@ -47,7 +48,8 @@ namespace TicketingSystem.DB.DBManagers
                 Description = impact.Description,
                 ID = impact.ID,
                 Title = impact.Title,
-                IsActive = impact.IsActive
+                IsActive = impact.IsActive,
+                IsDefault = impact.IsDefault
             };
         }
     }

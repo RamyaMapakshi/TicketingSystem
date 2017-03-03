@@ -16,7 +16,8 @@ namespace TicketingSystem.DB.DBManagers
                 Description = ticketType.Description,
                 ID = ticketType.ID,
                 Title = ticketType.Title,
-                IsActive = ticketType.IsActive
+                IsActive = ticketType.IsActive,
+                IsDefault = ticketType.IsDefault,
             };
         }
         public List<ViewModel.TicketType> GetAllTicketTypes()
@@ -40,7 +41,8 @@ namespace TicketingSystem.DB.DBManagers
                     ID = ticketType.ID,
                     IsActive = ticketType.IsActive,
                     Title = ticketType.Title,
-                    Description = ticketType.Description
+                    Description = ticketType.Description,
+                    IsDefault = ticketType.IsDefault
                 };
                 if (ticketType.ID == 0)
                 {

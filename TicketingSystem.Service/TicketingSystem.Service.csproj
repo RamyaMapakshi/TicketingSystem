@@ -169,6 +169,7 @@
     </Content>
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <None Include="Properties\PublishProfiles\TicketingSystem.Service.pubxml" />
+    <None Include="Properties\PublishProfiles\TicketingSystem.Service.Release.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -28,17 +28,27 @@ namespace TicketingSystem.Service.Controllers
         /// <param name="ticket"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/CreateTicketWithBasicInfo/")]
+        [Route("api/Ticket/CreateTicketWithBasicInfo/")]
         public bool CreateTicket([FromBody]NewTicketCreationInfoBasic ticket)
         {
             return dbManager.UpsertTicketObject(ticket.CreateTicketFromBasicTicketInfo());
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("api/Ticket/GetTicketById/")]
+        public Ticket GetTicketById(int id)
+        {
+            return dbManager.GetTicketById(id);
         }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        [Route("api/GetAllTickets/")]
+        [Route("api/Ticket/GetAllTickets/")]
         public List<Ticket> GetAllTickets()
         {
             return dbManager.GetAllTickets();

@@ -18,7 +18,9 @@ namespace TicketingSystem.DB.DBManagers
                     ID = subCategory.ID,
                     IsActive = subCategory.IsActive,
                     Title = subCategory.Title,
-                    Description = subCategory.Description
+                    Description = subCategory.Description,
+                    IsDefault = subCategory.IsDefault,
+                    ParentCategory = subCategory.ParentCategory
                 };
                 if (subCategory.ID == 0)
                 {
@@ -39,7 +41,7 @@ namespace TicketingSystem.DB.DBManagers
             }
             return categories;
         }
-        
+
         public ViewModel.SubCategory ConvertToViewModelObject(Database.SubCategory subCategory)
         {
             return new ViewModel.SubCategory()
@@ -47,7 +49,9 @@ namespace TicketingSystem.DB.DBManagers
                 Description = subCategory.Description,
                 ID = subCategory.ID,
                 Title = subCategory.Title,
-                IsActive = subCategory.IsActive
+                IsActive = subCategory.IsActive,
+                ParentCategory = subCategory.ParentCategory,
+                IsDefault = subCategory.IsDefault
             };
         }
     }

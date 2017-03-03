@@ -140,5 +140,9 @@ namespace TicketingSystem.DB
             return CommonDBManager.PriorityDBManager.GetAllPriorities();
         }
 
+        public Ticket GetTicketById(int id)
+        {
+            return CommonDBManager.TickerDbManager.GetTicketByID(id);
+        }
     }
 }
