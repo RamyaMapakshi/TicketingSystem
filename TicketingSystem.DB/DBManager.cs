@@ -27,9 +27,9 @@ namespace TicketingSystem.DB
         {
             return CommonDBManager.PriorityDBManager.UpsertPriority(priority);
         }
-        public List<Ticket> GetAllTickets()
+        public List<Ticket> GetAllTickets(bool isDependeciesToBeLoadedWithTicket = false)
         {
-            return CommonDBManager.TickerDbManager.GetAllTickets();
+            return CommonDBManager.TickerDbManager.GetAllTickets(isDependeciesToBeLoadedWithTicket);
         }
         public bool UpsertImpact(Impact impact)
         {
@@ -144,9 +144,9 @@ namespace TicketingSystem.DB
             return CommonDBManager.PriorityDBManager.GetAllPriorities();
         }
 
-        public Ticket GetTicketById(int id)
+        public Ticket GetTicketById(int id, bool isDependeciesToBeLoadedWithTicket)
         {
-            return CommonDBManager.TickerDbManager.GetTicketByID(id);
+            return CommonDBManager.TickerDbManager.GetTicketByID(id, isDependeciesToBeLoadedWithTicket);
         }
     }
 }

@@ -84,29 +84,29 @@ namespace TicketingSystem.DB.DBManagers
             }
             return user.ID;
         }
-        public List<ViewModel.Ticket> GetAllTickets()
+        public List<ViewModel.Ticket> GetAllTickets(bool isDependeciesToBeLoadedWithTicket = false)
         {
             List<ViewModel.Ticket> tickets = new List<ViewModel.Ticket>();
             using (TicketingSystemDBContext context = new TicketingSystemDBContext())
             {
                 foreach (var ticket in context.Tickets)
                 {
-                    tickets.Add(ConvertToViewModelObject(ticket));
+                    tickets.Add(ConvertToViewModelObject(ticket,isDependeciesToBeLoadedWithTicket));
                 }
             }
             return tickets;
         }
-        public ViewModel.Ticket GetTicketByID(int id)
+        public ViewModel.Ticket GetTicketByID(int id, bool isDependeciesToBeLoadedWithTicket = true)
         {
             using (TicketingSystemDBContext context = new TicketingSystemDBContext())
             {
-                return ConvertToViewModelObject(context.Tickets.FirstOrDefault(x => x.ID == id));
+                return ConvertToViewModelObject(context.Tickets.FirstOrDefault(x => x.ID == id),isDependeciesToBeLoadedWithTicket);
             }
         }
 
-        public ViewModel.Ticket ConvertToViewModelObject(Database.Ticket ticket)
+        public ViewModel.Ticket ConvertToViewModelObject(Database.Ticket ticket, bool isDependeciesToBeLoadedWithTicket=true)
         {
-            return new ViewModel.Ticket()
+            ViewModel.Ticket ticketToBeReturned= new ViewModel.Ticket()
             {
                 ID = ticket.ID,
                 DueDate = ticket.DueDate,
@@ -134,11 +134,16 @@ namespace TicketingSystem.DB.DBManagers
                 Category = CommonDBManager.CategoryDBManager.ConvertToViewModelObject(ticket.Category),
                 Priority = CommonDBManager.PriorityDBManager.ConvertToViewModelObject(ticket.Priority),
                 Status = CommonDBManager.StatusDBManager.ConvertToViewModelObject(ticket.Status),
-                Type = CommonDBManager.TicketTypeDBManager.ConvertToViewModelObject(ticket.TicketType1),
-                Attachments = CommonDBManager.AttachmentDBManager.ConvertToViewModelObjects(ticket.Attachments.ToList()),
-                Comments = CommonDBManager.CommentDbManager.ConvertToViewModelObjects(ticket.Comments.ToList()),
-                Histories = CommonDBManager.HistoryDBManager.ConvertToViewModelObjects(ticket.Histories.ToList())
+                Type = CommonDBManager.TicketTypeDBManager.ConvertToViewModelObject(ticket.TicketType1)
+                
             };
+            if (isDependeciesToBeLoadedWithTicket)
+            {
+                ticketToBeReturned.Attachments = CommonDBManager.AttachmentDBManager.ConvertToViewModelObjects(ticket.Attachments.ToList());
+                ticketToBeReturned.Comments = CommonDBManager.CommentDbManager.ConvertToViewModelObjects(ticket.Comments.ToList());
+                ticketToBeReturned.Histories = CommonDBManager.HistoryDBManager.ConvertToViewModelObjects(ticket.Histories.ToList());
+            }
+            return ticketToBeReturned;
         }
     }
 }

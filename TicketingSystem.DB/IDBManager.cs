@@ -9,12 +9,12 @@ namespace TicketingSystem.DB
         bool UpsertCategory(Category category);
         bool UpsertTicketType(TicketType type);
         bool UpsertPriority(Priority priority);
-        List<Ticket> GetAllTickets();
+        List<Ticket> GetAllTickets(bool isDependeciesToBeLoadedWithTicket = false);
         bool UpsertSubCategory(SubCategory subCategory);
         List<SubCategory> GetAllSubCategory();
         bool UpsertImpact(Impact impact);
         List<Impact> GetAllImpacts();
-        Ticket GetTicketById(int id);
+        Ticket GetTicketById(int id, bool isDependeciesToBeLoadedWithTicket);
         User GetUserById(int id);
         List<Attachment> GetAttachmentsDetailByTicketId(int ticketId);
         bool SaveComment(Comment comment);
