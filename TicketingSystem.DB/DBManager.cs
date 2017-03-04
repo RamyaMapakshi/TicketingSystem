@@ -74,7 +74,7 @@ namespace TicketingSystem.DB
                 foreach (var attachment in ticket.Attachments.Where(x => x.ID == 0))
                 {
                     attachment.TicketId = ticket.ID;
-                    UploadAttachment(attachment);
+                    SaveAttachmentDetail(attachment);
                 }
             }
             if (ticket.Comments.Where(x => x.ID == 0).ToList().Count > 0)
@@ -91,19 +91,23 @@ namespace TicketingSystem.DB
         {
             if (comment.Attachment != null)
             {
-                UploadAttachment(comment.Attachment);
+                SaveAttachmentDetail(comment.Attachment);
             }
             return CommonDBManager.CommentDbManager.UpsertComment(comment);
         }
-        public bool UploadAttachment(Attachment attachment)
+        public bool SaveAttachmentDetail(Attachment attachment)
         {
-            return CommonDBManager.AttachmentDBManager.UpsertAttachment(attachment);
+            return CommonDBManager.AttachmentDBManager.SaveAttachmentDetail(attachment);
         }
-        public bool UploadAttachments(List<Attachment> attachments)
+        public List<Attachment> GetAttachmentsDetailByTicketId(int ticketId)
+        {
+            return CommonDBManager.AttachmentDBManager.GetAttachmentsDetailByTicketId(ticketId);
+        }
+        public bool SaveAttachmentsDetail(List<Attachment> attachments)
         {
             foreach (var attachment in attachments)
             {
-                UploadAttachment(attachment);
+                SaveAttachmentDetail(attachment);
             }
             return true;
         }

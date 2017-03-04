@@ -16,10 +16,10 @@ namespace TicketingSystem.DB
         List<Impact> GetAllImpacts();
         Ticket GetTicketById(int id);
         User GetUserById(int id);
-
+        List<Attachment> GetAttachmentsDetailByTicketId(int ticketId);
         bool SaveComment(Comment comment);
-        bool UploadAttachment(Attachment attachment);
-        bool UploadAttachments(List<Attachment> attachments);
+        bool SaveAttachmentDetail(Attachment attachment);
+        bool SaveAttachmentsDetail(List<Attachment> attachments);
         bool UpsertTicketObject(Ticket ticket);
         List<Comment> GetCommentsByTicketId(int ticketId);
         List<ViewModel.History> GetHistoriesByTicketId(int ticketId);
