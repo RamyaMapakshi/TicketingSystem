@@ -13,15 +13,19 @@ namespace TicketingSystem.DB.DBManagers
         {
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {
-                Database.SubCategory subCategoryToBeUpdated = new Database.SubCategory()
+                Database.SubCategory subCategoryToBeUpdated = new Database.SubCategory();
+
+                if (subCategory.ID != 0)
                 {
-                    ID = subCategory.ID,
-                    IsActive = subCategory.IsActive,
-                    Title = subCategory.Title,
-                    Description = subCategory.Description,
-                    IsDefault = subCategory.IsDefault,
-                    ParentCategory = subCategory.ParentCategory
-                };
+                    subCategoryToBeUpdated = context.SubCategories.FirstOrDefault(x => x.ID == subCategory.ID);
+                }
+                subCategoryToBeUpdated.ID = subCategory.ID;
+                subCategoryToBeUpdated.IsActive = subCategory.IsActive;
+                subCategoryToBeUpdated.Title = subCategory.Title;
+                subCategoryToBeUpdated.Description = subCategory.Description;
+                subCategoryToBeUpdated.IsDefault = subCategory.IsDefault;
+                subCategoryToBeUpdated.ParentCategory = subCategory.ParentCategory;
+
                 if (subCategory.ID == 0)
                 {
                     context.SubCategories.Add(subCategoryToBeUpdated);

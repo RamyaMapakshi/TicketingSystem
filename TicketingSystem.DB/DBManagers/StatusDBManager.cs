@@ -45,18 +45,29 @@ namespace TicketingSystem.DB.DBManagers
         {
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {
-                Database.Status statusToBeUpdated = new Database.Status()
+                Database.Status statusToBeUpdated = new Database.Status();
+                if (status.ID != 0)
                 {
-                    ID = status.ID,
-                    IsActive = status.IsActive,
-                    Title = status.Title,
-                    Description = status.Description,
-                    IsDefault = status.IsDefault
-                };
+                    statusToBeUpdated = context.Status.FirstOrDefault(x => x.ID == status.ID);
+                }
+                statusToBeUpdated.ID = status.ID;
+                statusToBeUpdated.IsActive = status.IsActive;
+                statusToBeUpdated.Title = status.Title;
+                statusToBeUpdated.Description = status.Description;
+                statusToBeUpdated.IsDefault = status.IsDefault;
+                if ((bool)status.IsActive&&(bool)status.IsDefault)
+                {
+                    var defaultStatus = context.Status.FirstOrDefault(x=>(bool)x.IsDefault&&(bool)x.IsActive&&x.ID!=status.ID);
+                    if (defaultStatus!=null)
+                    {
+                        defaultStatus.IsDefault = false;
+                    }
+                }
                 if (status.ID == 0)
                 {
                     context.Status.Add(statusToBeUpdated);
                 }
+
                 return Convert.ToBoolean(context.SaveChanges());
             }
         }

@@ -13,16 +13,30 @@ namespace TicketingSystem.DB.DBManagers
         {
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {
-                Database.Priority priorityToBeUpdated = new Database.Priority()
+                Database.Priority priorityToBeUpdated = new Database.Priority();
+
+                if (priority.ID!=0)
                 {
-                    ID = priority.ID,
-                    IsActive = priority.IsActive,
-                    Title = priority.Title,
-                    Description = priority.Description,
-                    Color = priority.Color,
-                    DaysDue = priority.DaysDue,
-                    IsDefault = priority.IsDefault
-                };
+                    priorityToBeUpdated = context.Priorities.FirstOrDefault(x=>x.ID==priority.ID);
+                }
+
+                priorityToBeUpdated.ID = priority.ID;
+                priorityToBeUpdated.IsActive = priority.IsActive;
+                priorityToBeUpdated.Title = priority.Title;
+                priorityToBeUpdated.Description = priority.Description;
+                priorityToBeUpdated.Color = priority.Color;
+                priorityToBeUpdated.DaysDue = priority.DaysDue;
+                priorityToBeUpdated.IsDefault = priority.IsDefault;
+
+                if ((bool)priority.IsActive && (bool)priority.IsDefault)
+                {
+                    var defaultPriority = context.Priorities.FirstOrDefault(x => (bool)x.IsDefault && (bool)x.IsActive && x.ID != priority.ID);
+                    if (defaultPriority != null)
+                    {
+                        defaultPriority.IsDefault = false;
+                    }
+                }
+
                 if (priority.ID == 0)
                 {
                     context.Priorities.Add(priorityToBeUpdated);

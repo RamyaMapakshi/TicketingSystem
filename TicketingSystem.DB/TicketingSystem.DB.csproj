@@ -60,7 +60,6 @@
     <Compile Include="Database\Priority.cs" />
     <Compile Include="Database\Status.cs" />
     <Compile Include="Database\SubCategory.cs" />
-    <Compile Include="Database\sysdiagram.cs" />
     <Compile Include="Database\Tags.cs" />
     <Compile Include="Database\Ticket.cs" />
     <Compile Include="Database\TicketingSystemDBContext.cs" />

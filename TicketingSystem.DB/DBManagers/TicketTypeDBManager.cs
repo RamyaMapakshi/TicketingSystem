@@ -36,14 +36,28 @@ namespace TicketingSystem.DB.DBManagers
         {
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {
-                Database.TicketType ticketTypeToBeUpdated = new Database.TicketType()
+                Database.TicketType ticketTypeToBeUpdated = new Database.TicketType();
+
+                if (ticketType.ID != 0)
                 {
-                    ID = ticketType.ID,
-                    IsActive = ticketType.IsActive,
-                    Title = ticketType.Title,
-                    Description = ticketType.Description,
-                    IsDefault = ticketType.IsDefault
-                };
+                    ticketTypeToBeUpdated = context.TicketTypes.FirstOrDefault(x => x.ID == ticketType.ID);
+                }
+
+                ticketTypeToBeUpdated.ID = ticketType.ID;
+                ticketTypeToBeUpdated.IsActive = ticketType.IsActive;
+                ticketTypeToBeUpdated.Title = ticketType.Title;
+                ticketTypeToBeUpdated.Description = ticketType.Description;
+                ticketTypeToBeUpdated.IsDefault = ticketType.IsDefault;
+
+                if ((bool)ticketType.IsActive && (bool)ticketType.IsDefault)
+                {
+                    var defaultTicketType = context.Status.FirstOrDefault(x => (bool)x.IsDefault && (bool)x.IsActive && x.ID != ticketType.ID);
+                    if (defaultTicketType != null)
+                    {
+                        defaultTicketType.IsDefault = false;
+                    }
+                }
+
                 if (ticketType.ID == 0)
                 {
                     context.TicketTypes.Add(ticketTypeToBeUpdated);

@@ -37,6 +37,30 @@ namespace TicketingSystem.Service.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="ticket"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/Ticket/UpdateTicketInfo/Basic")]
+        public bool UpdateTicketInfo([FromBody]BasicViewTicket ticket)
+        {
+            return dbManager.UpsertTicketObject(ticket.ConvertBasicTicketToViewModelTicket());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ticket"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("api/Ticket/UpdateTicketInfo/")]
+        public bool UpdateTicketInfo([FromBody]Ticket ticket)
+        {
+            return dbManager.UpsertTicketObject(ticket);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="id"></param>
         /// <param name="isDependeciesToBeLoadedWithTicket"></param>
         /// <returns></returns>

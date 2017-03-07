@@ -13,14 +13,27 @@ namespace TicketingSystem.DB.DBManagers
         {
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {
-                Database.Category categoryToBeUpdated = new Database.Category()
+                Database.Category categoryToBeUpdated = new Database.Category();
+
+                if (category.ID != 0)
                 {
-                    ID = category.ID,
-                    IsActive = category.IsActive,
-                    Title = category.Title,
-                    Description = category.Description,
-                    IsDefault = category.IsDefault
-                };
+                    categoryToBeUpdated = context.Categories.FirstOrDefault(x => x.ID == categoryToBeUpdated.ID);
+                }
+                categoryToBeUpdated.ID = category.ID;
+                categoryToBeUpdated.IsActive = category.IsActive;
+                categoryToBeUpdated.Title = category.Title;
+                categoryToBeUpdated.Description = category.Description;
+                categoryToBeUpdated.IsDefault = category.IsDefault;
+
+                if ((bool)category.IsActive && (bool)category.IsDefault)
+                {
+                    var defaultCategory = context.Status.FirstOrDefault(x => (bool)x.IsDefault && (bool)x.IsActive && x.ID != category.ID);
+                    if (defaultCategory != null)
+                    {
+                        defaultCategory.IsDefault = false;
+                    }
+                }
+
                 if (category.ID == 0)
                 {
                     context.Categories.Add(categoryToBeUpdated);

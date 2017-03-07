@@ -26,7 +26,7 @@ namespace TicketingSystem.Service.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [Route("api/OtherInfo/Status/GetAllStatus/")]
+        [Route("api/Status/GetAllStatus/")]
         public List<Status> GetAllStatus()
         {
             return dbManager.GetAllStatus();
@@ -36,7 +36,7 @@ namespace TicketingSystem.Service.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [Route("api/OtherInfo/TicketType/GetAllTicketTypes/")]
+        [Route("api/TicketType/GetAllTicketTypes/")]
         public List<TicketType> GetAllTicketTypes()
         {
             return dbManager.GetAllTicketTypes();
@@ -47,7 +47,7 @@ namespace TicketingSystem.Service.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [Route("api/OtherInfo/Priority/GetAllPriorities/")]
+        [Route("api/Priority/GetAllPriorities/")]
         public List<Priority> GetAllPriorities()
         {
             return dbManager.GetAllPriorities();
@@ -57,7 +57,7 @@ namespace TicketingSystem.Service.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [Route("api/OtherInfo/Category/GetAllCategories/")]
+        [Route("api/Category/GetAllCategories/")]
         public List<Category> GetAllCategories()
         {
             return dbManager.GetAllCategories();
@@ -67,7 +67,7 @@ namespace TicketingSystem.Service.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [Route("api/OtherInfo/SubCategory/GetAllSubCategories/")]
+        [Route("api/SubCategory/GetAllSubCategories/")]
         public List<SubCategory> GetAllSubCategories()
         {
             return dbManager.GetAllSubCategory();
@@ -77,7 +77,7 @@ namespace TicketingSystem.Service.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        [Route("api/OtherInfo/Impact/GetAllImpacts/")]
+        [Route("api/Impact/GetAllImpacts/")]
         public List<Impact> GetAllImpacts()
         {
             return dbManager.GetAllImpacts();
@@ -89,7 +89,7 @@ namespace TicketingSystem.Service.Controllers
         /// <param name="impact"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/OtherInfo/Impact/UpsertImpact/")]
+        [Route("api/Impact/UpsertImpact/")]
         public bool UpsertImpact([FromBody]Impact impact)
         {
             return dbManager.UpsertImpact(impact);
@@ -101,7 +101,7 @@ namespace TicketingSystem.Service.Controllers
         /// <param name="SubCategory"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/OtherInfo/SubCategory/UpsertSubCategory/")]
+        [Route("api/SubCategory/UpsertSubCategory/")]
         public bool UpsertSubCategory([FromBody]SubCategory subCategory)
         {
             return dbManager.UpsertSubCategory(subCategory);
@@ -113,7 +113,7 @@ namespace TicketingSystem.Service.Controllers
         /// <param name="status"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/OtherInfo/Status/UpsertStatus/")]
+        [Route("api/Status/UpsertStatus/")]
         public bool UpsertStatus([FromBody]Status status)
         {
             return dbManager.UpsertStatus(status);
@@ -125,7 +125,7 @@ namespace TicketingSystem.Service.Controllers
         /// <param name="priority"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/OtherInfo/Priority/UpsertPriority/")]
+        [Route("api/Priority/UpsertPriority/")]
         public bool UpsertPriority([FromBody]Priority priority)
         {
             return dbManager.UpsertPriority(priority);
@@ -137,7 +137,7 @@ namespace TicketingSystem.Service.Controllers
         /// <param name="type"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/OtherInfo/TicketType/UpsertTicketType/")]
+        [Route("api/TicketType/UpsertTicketType/")]
         public bool UpsertTicketType([FromBody]TicketType type)
         {
             return dbManager.UpsertTicketType(type);
@@ -149,7 +149,7 @@ namespace TicketingSystem.Service.Controllers
         /// <param name="type"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("api/OtherInfo/Category/UpsertCategory/")]
+        [Route("api/Category/UpsertCategory/")]
         public bool UpsertCategory([FromBody]Category category)
         {
             return dbManager.UpsertCategory(category);

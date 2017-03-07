@@ -18,19 +18,21 @@ namespace TicketingSystem.DB.DBManagers
             {
                 if (ticket.ID == 0)
                 {
-                    ticketToBeUpdated.TicketStatus = ticketToBeUpdated.TicketStatus == 0 ? context.Status.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketStatus;
-                    ticketToBeUpdated.TicketPriority = !ticketToBeUpdated.TicketPriority.HasValue ? context.Priorities.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketPriority;
-                    ticketToBeUpdated.TicketCategory = !ticketToBeUpdated.TicketCategory.HasValue ? context.Categories.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketCategory;
-                    ticketToBeUpdated.TicketType = !ticketToBeUpdated.TicketType.HasValue ? context.TicketTypes.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketType;
-                    ticketToBeUpdated.TicketSubCategory = !ticketToBeUpdated.TicketSubCategory.HasValue ? context.SubCategories.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketSubCategory;
-                    ticketToBeUpdated.TicketImpact = !ticketToBeUpdated.TicketImpact.HasValue ? context.Impacts.FirstOrDefault(x => x.IsDefault == true).ID : ticketToBeUpdated.TicketImpact;
+                    ticketToBeUpdated.TicketStatus = context.Status.FirstOrDefault(x => x.IsDefault == true).ID;
+                    ticketToBeUpdated.TicketPriority = context.Priorities.FirstOrDefault(x => x.IsDefault == true).ID;
+                    ticketToBeUpdated.TicketCategory = context.Categories.FirstOrDefault(x => x.IsDefault == true).ID;
+                    ticketToBeUpdated.TicketType = context.TicketTypes.FirstOrDefault(x => x.IsDefault == true).ID;
+                    ticketToBeUpdated.TicketImpact = context.Impacts.FirstOrDefault(x => x.IsDefault == true).ID;
                 }
                 else
                 {
+                    ticketToBeUpdated = context.Tickets.FirstOrDefault(x=>x.ID==ticket.ID);
                     ticketToBeUpdated.TicketPriority = ticket.Priority.ID;
                     ticketToBeUpdated.TicketCategory = ticket.Category.ID;
                     ticketToBeUpdated.TicketStatus = ticket.Status.ID;
                     ticketToBeUpdated.TicketType = ticket.Type.ID;
+                    ticketToBeUpdated.TicketSubCategory = _returnObjectId(ticket.SubCategory);
+                    ticketToBeUpdated.TicketImpact = _returnObjectId(ticket.Impact);
                 }
                 ticketToBeUpdated.Notes = ticket.Notes;
                 ticketToBeUpdated.EmailsToNotify = ticket.EmailsToNotify;
@@ -83,6 +85,14 @@ namespace TicketingSystem.DB.DBManagers
                 return null;
             }
             return user.ID;
+        }
+        private int? _returnObjectId(dynamic dObject)
+        {
+            if (dObject == null)
+            {
+                return null;
+            }
+            return dObject.ID;
         }
         public List<ViewModel.Ticket> GetAllTickets(bool isDependeciesToBeLoadedWithTicket = false)
         {

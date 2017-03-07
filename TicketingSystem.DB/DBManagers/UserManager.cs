@@ -13,6 +13,7 @@ namespace TicketingSystem.DB.DBManagers
         {
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {
+
                 Database.User userToBeUpdated = ConvertToDatabaseObject(user);
                 if (user.ID == 0)
                 {

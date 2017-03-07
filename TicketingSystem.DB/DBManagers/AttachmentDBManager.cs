@@ -7,26 +7,32 @@ using TicketingSystem.DB.IDBManagers;
 
 namespace TicketingSystem.DB.DBManagers
 {
-    public class AttachmentDBManager:IAttachmentManager
+    public class AttachmentDBManager : IAttachmentManager
     {
         public bool SaveAttachmentDetail(ViewModel.Attachment attachment)
         {
             HistoryDBManager historyDBManager = new HistoryDBManager();
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {
-                Database.Attachment attachmentToBeUpdated = new Database.Attachment()
+                Database.Attachment attachmentToBeUpdated = new Database.Attachment();
+
+                if (attachment.ID!=0)
                 {
-                    ID = attachment.ID,
-                    FileName = attachment.FileName,
-                    FileUrl = attachment.FileUrl,
-                    Ticket = attachment.TicketId,
-                    UploadedBy = attachment.UploadedBy.ID
-                };
-                if (attachment.ID==0)
+                    attachmentToBeUpdated = context.Attachments.FirstOrDefault(x=>x.ID==attachment.ID);
+                }
+
+                attachmentToBeUpdated.ID = attachment.ID;
+                attachmentToBeUpdated.FileName = attachment.FileName;
+                attachmentToBeUpdated.FileUrl = attachment.FileUrl;
+                attachmentToBeUpdated.Ticket = attachment.TicketId;
+                attachmentToBeUpdated.UploadedBy = attachment.UploadedBy.ID;
+
+                if (attachment.ID == 0)
                 {
                     context.Attachments.Add(attachmentToBeUpdated);
                     historyDBManager.CreateNewAttachmentHistory(attachment);
                 }
+
                 return Convert.ToBoolean(context.SaveChanges());
             }
         }
@@ -53,7 +59,7 @@ namespace TicketingSystem.DB.DBManagers
         }
         public ViewModel.Attachment ConvertToViewModelObject(Database.Attachment attachment)
         {
-            if (attachment==null)
+            if (attachment == null)
             {
                 return null;
             }

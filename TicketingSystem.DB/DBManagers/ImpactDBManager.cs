@@ -13,14 +13,28 @@ namespace TicketingSystem.DB.DBManagers
         {
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {
-                Database.Impact impactToBeUpdated = new Database.Impact()
+                Database.Impact impactToBeUpdated = new Database.Impact();
+
+                if (impact.ID!=0)
                 {
-                    ID = impact.ID,
-                    IsActive = impact.IsActive,
-                    Title = impact.Title,
-                    Description = impact.Description,
-                    IsDefault = impact.IsDefault
-                };
+                    impactToBeUpdated = context.Impacts.FirstOrDefault(x=>x.ID==impact.ID);
+                }
+
+                impactToBeUpdated.ID = impact.ID;
+                impactToBeUpdated.IsActive = impact.IsActive;
+                impactToBeUpdated.Title = impact.Title;
+                impactToBeUpdated.Description = impact.Description;
+                impactToBeUpdated.IsDefault = impact.IsDefault;
+
+                if ((bool)impact.IsActive && (bool)impact.IsDefault)
+                {
+                    var defaultImpact = context.Impacts.FirstOrDefault(x => (bool)x.IsDefault && (bool)x.IsActive && x.ID != impact.ID);
+                    if (defaultImpact != null)
+                    {
+                        defaultImpact.IsDefault = false;
+                    }
+                }
+
                 if (impact.ID == 0)
                 {
                     context.Impacts.Add(impactToBeUpdated);

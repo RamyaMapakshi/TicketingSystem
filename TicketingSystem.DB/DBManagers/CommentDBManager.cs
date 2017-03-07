@@ -14,18 +14,24 @@ namespace TicketingSystem.DB.DBManagers
             HistoryDBManager historyDBManager = new HistoryDBManager();
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {
-                Database.Comment commentToBeUpdated = new Database.Comment()
+
+                Database.Comment commentToBeUpdated = new Database.Comment();
+
+                if (comment.ID!=0)
                 {
-                    ID = comment.ID,
-                    Created = comment.Created,
-                    CreatedBy = comment.CreatedBy.ID,
-                    Details = comment.Details,
-                    IsPrivate = comment.IsPrivate,
-                    Modified = comment.Modified,
-                    ModifiedBy = comment.ModifiedBy.ID,
-                    Ticket = comment.TicketId,
-                    AttachmentId = comment.Attachment == null ? (int?)null : comment.Attachment.ID
-                };
+                    commentToBeUpdated = context.Comments.FirstOrDefault(x => x.ID == comment.ID);
+                }
+
+                commentToBeUpdated.ID = comment.ID;
+                commentToBeUpdated.Created = comment.Created;
+                commentToBeUpdated.CreatedBy = comment.CreatedBy.ID;
+                commentToBeUpdated.Details = comment.Details;
+                commentToBeUpdated.IsPrivate = comment.IsPrivate;
+                commentToBeUpdated.Modified = comment.Modified;
+                commentToBeUpdated.ModifiedBy = comment.ModifiedBy.ID;
+                commentToBeUpdated.Ticket = comment.TicketId;
+                commentToBeUpdated.AttachmentId = comment.Attachment == null ? (int?)null : comment.Attachment.ID;
+
                 if (comment.ID == 0)
                 {
                     commentToBeUpdated.Created = DateTime.Now;

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
+using TicketingSystem.DB.ViewModel;
 
-namespace TicketingSystem.DB.ViewModel
+namespace TicketingSystem.Service.Models
 {
-    public class Ticket
+    public class BasicViewTicket
     {
         public int ID { get; set; }
 
@@ -16,7 +16,6 @@ namespace TicketingSystem.DB.ViewModel
         public Status Status { get; set; }
 
         public Category Category { get; set; }
-        public Impact Impact { get; set; }
         public SubCategory SubCategory { get; set; }
         public string Description { get; set; }
         public string Tags { get; set; }
@@ -58,15 +57,21 @@ namespace TicketingSystem.DB.ViewModel
         public bool? IsDuplicate { get; set; }
 
         public int? DuplicateTicketID { get; set; }
-
         public List<Attachment> Attachments { get; set; }
-        public List<Comment> Comments { get; set; }
-        public List<History> Histories { get; set; }
-        public Ticket()
+
+        public BasicViewTicket()
         {
             this.Attachments = new List<Attachment>();
-            this.Comments = new List<Comment>();
-            this.Histories = new List<History>();
+        }
+        public Ticket ConvertBasicTicketToViewModelTicket()
+        {
+            Ticket ticket = new Ticket();
+            foreach (var property in this.GetType().GetProperties())
+            {
+                ticket.GetType().GetProperties().FirstOrDefault(x => x.Name == property.Name).SetValue(this, property.GetValue(this));
+            }
+            ticket.Modified = DateTime.Now;
+            return ticket;
         }
     }
 }
