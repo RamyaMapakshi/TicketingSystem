@@ -8,7 +8,7 @@ namespace TicketingSystem.DB.IDBManagers
 {
     public interface IAttachmentManager
     {
-        bool SaveAttachmentDetail(ViewModel.Attachment attachment);
+        int SaveAttachmentDetail(ViewModel.Attachment attachment);
         List<ViewModel.Attachment> GetAttachmentsDetailByTicketId(int ticketId);
     }
 }

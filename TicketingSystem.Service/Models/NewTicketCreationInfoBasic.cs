@@ -10,7 +10,6 @@ namespace TicketingSystem.Service.Models
     public class NewTicketCreationInfoBasic
     {
         public User RequestedBy { get; set; }
-        public User RequestedFor { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string EmailsToNotify { get; set; }
@@ -31,8 +30,11 @@ namespace TicketingSystem.Service.Models
                 Modified = DateTime.Now,
                 ModifiedBy = this.RequestedBy,
                 RequestedBy = this.RequestedBy,
-                RequestedFor = this.RequestedFor,
+                RequestedFor = this.RequestedBy,
                 Attachments = this.Attachments,
+                Title = this.Title,
+                EmailsToNotify = this.EmailsToNotify,
+                Description = this.Description
             };
         }
     }

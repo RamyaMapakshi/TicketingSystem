@@ -22,7 +22,7 @@ namespace TicketingSystem.DB.Database
 
         public int Ticket { get; set; }
 
-        public virtual Ticket _Ticket { get; set; }
+        public virtual Ticket Ticket1 { get; set; }
 
         public virtual User _UploadedBy { get; set; }
     }

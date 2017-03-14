@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+  <Module Name="_Resources">
+    <File Path="_Resources\Ticket.css" Url="_Resources/Ticket.css" ReplaceContent="TRUE" />
+    <File Path="_Resources\NewTicket.js" Url="_Resources/NewTicket.js" ReplaceContent="TRUE" />
+  </Module>
+</Elements>

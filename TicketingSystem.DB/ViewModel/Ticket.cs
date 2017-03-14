@@ -9,7 +9,7 @@ namespace TicketingSystem.DB.ViewModel
     public class Ticket
     {
         public int ID { get; set; }
-
+        public string Title { get; set; }
         public User RequestedBy { get; set; }
         public User RequestedFor { get; set; }
 

@@ -56,6 +56,10 @@ namespace TicketingSystem.DB.DBManagers
 
         public ViewModel.Category ConvertToViewModelObject(Database.Category category)
         {
+            if (category==null)
+            {
+                return null;
+            }
             return new ViewModel.Category()
             {
                 Description = category.Description,

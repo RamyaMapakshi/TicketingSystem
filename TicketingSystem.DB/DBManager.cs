@@ -47,7 +47,7 @@ namespace TicketingSystem.DB
         {
             return CommonDBManager.SubCategoryDBManager.GetAllsubCategories();
         }
-        public bool UpsertTicketObject(Ticket ticket)
+        public int UpsertTicketObject(Ticket ticket)
         {
             foreach (var prop in ticket.GetType().GetProperties())
             {
@@ -56,14 +56,15 @@ namespace TicketingSystem.DB
                     var user = (prop.GetValue(ticket) as User);
                     if (user != null)
                     {
-                        user = CommonDBManager.UserManager.GetUserByEmail(user.Email);
-                        if ( user== null)
+                        var dbUser = CommonDBManager.UserManager.GetUserByEmail(user.Email);
+                        if ( dbUser== null)
                         {
                             prop.SetValue(ticket, CommonDBManager.UserManager.UpsertUser(prop.GetValue(ticket) as User));
                         }
                         else
                         {
-                            prop.SetValue(ticket, user);
+                            dbUser.PhoneNumber = user.PhoneNumber;
+                            prop.SetValue(ticket, dbUser);
                         }
                     }
                 }
@@ -74,6 +75,8 @@ namespace TicketingSystem.DB
                 foreach (var attachment in ticket.Attachments.Where(x => x.ID == 0))
                 {
                     attachment.TicketId = ticket.ID;
+                    attachment.UploadedBy = ticket.ModifiedBy;
+                    attachment.FileUrl = attachment.FileUrl.Replace("$$ticketId$$",Convert.ToString(ticket.ID));
                     SaveAttachmentDetail(attachment);
                 }
             }
@@ -85,17 +88,17 @@ namespace TicketingSystem.DB
                     SaveComment(comment);
                 }
             }
-            return true;
+            return ticket.ID;
         }
         public bool SaveComment(Comment comment)
         {
             if (comment.Attachment != null)
             {
-                SaveAttachmentDetail(comment.Attachment);
+                comment.Attachment.ID=SaveAttachmentDetail(comment.Attachment);
             }
             return CommonDBManager.CommentDbManager.UpsertComment(comment);
         }
-        public bool SaveAttachmentDetail(Attachment attachment)
+        public int SaveAttachmentDetail(Attachment attachment)
         {
             return CommonDBManager.AttachmentDBManager.SaveAttachmentDetail(attachment);
         }

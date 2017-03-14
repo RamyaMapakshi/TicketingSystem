@@ -28,7 +28,7 @@ namespace TicketingSystem.Service.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/Attachment/SaveAttachmentDetail/")]
-        public bool UploadAttachment([FromBody]Attachment attachment)
+        public int UploadAttachment([FromBody]Attachment attachment)
         {
             return dbManager.SaveAttachmentDetail(attachment);
         }

@@ -12,6 +12,10 @@ namespace TicketingSystem.DB.DBManagers
     {
         public ViewModel.Status ConvertToViewModelObject(Database.Status status)
         {
+            if (status==null)
+            {
+                return null;
+            }
             return new ViewModel.Status()
             {
                 Description = status.Description,

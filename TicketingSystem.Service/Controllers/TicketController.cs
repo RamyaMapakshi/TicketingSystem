@@ -29,7 +29,7 @@ namespace TicketingSystem.Service.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/Ticket/CreateTicketWithBasicInfo/")]
-        public bool CreateTicket([FromBody]NewTicketCreationInfoBasic ticket)
+        public int CreateTicket([FromBody]NewTicketCreationInfoBasic ticket)
         {
             return dbManager.UpsertTicketObject(ticket.CreateTicketFromBasicTicketInfo());
         }
@@ -41,7 +41,7 @@ namespace TicketingSystem.Service.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/Ticket/UpdateTicketInfo/Basic")]
-        public bool UpdateTicketInfo([FromBody]BasicViewTicket ticket)
+        public int UpdateTicketInfo([FromBody]BasicViewTicket ticket)
         {
             return dbManager.UpsertTicketObject(ticket.ConvertBasicTicketToViewModelTicket());
         }
@@ -53,7 +53,7 @@ namespace TicketingSystem.Service.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("api/Ticket/UpdateTicketInfo/")]
-        public bool UpdateTicketInfo([FromBody]Ticket ticket)
+        public int UpdateTicketInfo([FromBody]Ticket ticket)
         {
             return dbManager.UpsertTicketObject(ticket);
         }

@@ -12,19 +12,21 @@ namespace TicketingSystem.DB.Database
         {
         }
 
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<Attachment> Attachments { get; set; }
-        public virtual DbSet<Impact> Impacts { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<SubCategory> SubCategories { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Configuration> Configurations { get; set; }
         public virtual DbSet<EmailParsingRule> EmailParsingRules { get; set; }
         public virtual DbSet<History> Histories { get; set; }
+        public virtual DbSet<Impact> Impacts { get; set; }
         public virtual DbSet<Priority> Priorities { get; set; }
         public virtual DbSet<Status> Status { get; set; }
+        public virtual DbSet<SubCategory> SubCategories { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<TicketType> TicketTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Tags> Tags { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -33,21 +35,15 @@ namespace TicketingSystem.DB.Database
                 .WithOptional(e => e.Category)
                 .HasForeignKey(e => e.TicketCategory);
 
-            modelBuilder.Entity<SubCategory>()
-                .HasMany(e => e.Tickets)
-                .WithOptional(e => e.SubCategory)
-                .HasForeignKey(e => e.TicketSubCategory);
+            modelBuilder.Entity<History>()
+                .HasMany(e => e.History1)
+                .WithOptional(e => e.History2)
+                .HasForeignKey(e => e.PreviousHistoryId);
 
             modelBuilder.Entity<Impact>()
                 .HasMany(e => e.Tickets)
                 .WithOptional(e => e.Impact)
                 .HasForeignKey(e => e.TicketImpact);
-
-
-            modelBuilder.Entity<History>()
-                .HasMany(e => e.History1)
-                .WithOptional(e => e.History2)
-                .HasForeignKey(e => e.PreviousHistoryId);
 
             modelBuilder.Entity<Priority>()
                 .HasMany(e => e.Tickets)
@@ -60,9 +56,14 @@ namespace TicketingSystem.DB.Database
                 .HasForeignKey(e => e.TicketStatus)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<SubCategory>()
+                .HasMany(e => e.Tickets)
+                .WithOptional(e => e.SubCategory)
+                .HasForeignKey(e => e.TicketSubCategory);
+
             modelBuilder.Entity<Ticket>()
                 .HasMany(e => e.Attachments)
-                .WithRequired(e => e._Ticket)
+                .WithRequired(e => e.Ticket1)
                 .HasForeignKey(e => e.Ticket)
                 .WillCascadeOnDelete(false);
 
@@ -127,14 +128,15 @@ namespace TicketingSystem.DB.Database
                 .WithRequired(e => e._RequestedBy)
                 .HasForeignKey(e => e.RequestedBy)
                 .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<User>()
-                .HasMany(e => e.Tickets4)
+                .HasMany(e => e.Tickets5)
                 .WithRequired(e => e._RequestedFor)
                 .HasForeignKey(e => e.RequestedFor)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<User>()
-                .HasMany(e => e.Tickets5)
+                .HasMany(e => e.Tickets6)
                 .WithOptional(e => e._ResolvedBy)
                 .HasForeignKey(e => e.ResolvedBy);
         }

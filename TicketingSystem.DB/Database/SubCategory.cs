@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace TicketingSystem.DB.Database
 {
-    
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
     [Table("SubCategory")]
     public partial class SubCategory
     {
@@ -25,9 +22,11 @@ namespace TicketingSystem.DB.Database
         public string Title { get; set; }
 
         public string Description { get; set; }
+
         public bool? IsDefault { get; set; }
 
         public bool? IsActive { get; set; }
+
         public string ParentCategory { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

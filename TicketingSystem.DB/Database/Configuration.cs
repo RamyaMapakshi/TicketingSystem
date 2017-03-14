@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -8,14 +7,12 @@ using System.Threading.Tasks;
 
 namespace TicketingSystem.DB.Database
 {
-    [Table("Tags")]
-    public partial class Tags
+    [Table("Configuration")]
+    public partial class Configuration
     {
         public int ID { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string TagName { get; set; }
-        public string Details { get; set; }
+        public string Key { get; set; }
+        public string Value { get; set; }
+        public bool? IsActive { get; set; }
     }
 }

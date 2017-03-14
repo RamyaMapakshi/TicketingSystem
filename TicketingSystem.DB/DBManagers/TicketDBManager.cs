@@ -22,11 +22,10 @@ namespace TicketingSystem.DB.DBManagers
                     ticketToBeUpdated.TicketPriority = context.Priorities.FirstOrDefault(x => x.IsDefault == true).ID;
                     ticketToBeUpdated.TicketCategory = context.Categories.FirstOrDefault(x => x.IsDefault == true).ID;
                     ticketToBeUpdated.TicketType = context.TicketTypes.FirstOrDefault(x => x.IsDefault == true).ID;
-                    ticketToBeUpdated.TicketImpact = context.Impacts.FirstOrDefault(x => x.IsDefault == true).ID;
                 }
                 else
                 {
-                    ticketToBeUpdated = context.Tickets.FirstOrDefault(x=>x.ID==ticket.ID);
+                    ticketToBeUpdated = context.Tickets.FirstOrDefault(x => x.ID == ticket.ID);
                     ticketToBeUpdated.TicketPriority = ticket.Priority.ID;
                     ticketToBeUpdated.TicketCategory = ticket.Category.ID;
                     ticketToBeUpdated.TicketStatus = ticket.Status.ID;
@@ -57,6 +56,7 @@ namespace TicketingSystem.DB.DBManagers
                 ticketToBeUpdated.RequestedFor = (int)_retrunUserId(ticket.RequestedFor);
                 ticketToBeUpdated.ResolvedBy = _retrunUserId(ticket.ResolvedBy);
                 ticketToBeUpdated.ResolvedDate = ticket.ResolvedDate;
+                ticketToBeUpdated.Title = ticket.Title;
 
                 if (ticket.ID == 0)
                 {
@@ -101,7 +101,7 @@ namespace TicketingSystem.DB.DBManagers
             {
                 foreach (var ticket in context.Tickets)
                 {
-                    tickets.Add(ConvertToViewModelObject(ticket,isDependeciesToBeLoadedWithTicket));
+                    tickets.Add(ConvertToViewModelObject(ticket, isDependeciesToBeLoadedWithTicket));
                 }
             }
             return tickets;
@@ -110,13 +110,13 @@ namespace TicketingSystem.DB.DBManagers
         {
             using (TicketingSystemDBContext context = new TicketingSystemDBContext())
             {
-                return ConvertToViewModelObject(context.Tickets.FirstOrDefault(x => x.ID == id),isDependeciesToBeLoadedWithTicket);
+                return ConvertToViewModelObject(context.Tickets.FirstOrDefault(x => x.ID == id), isDependeciesToBeLoadedWithTicket);
             }
         }
 
-        public ViewModel.Ticket ConvertToViewModelObject(Database.Ticket ticket, bool isDependeciesToBeLoadedWithTicket=true)
+        public ViewModel.Ticket ConvertToViewModelObject(Database.Ticket ticket, bool isDependeciesToBeLoadedWithTicket = true)
         {
-            ViewModel.Ticket ticketToBeReturned= new ViewModel.Ticket()
+            ViewModel.Ticket ticketToBeReturned = new ViewModel.Ticket()
             {
                 ID = ticket.ID,
                 DueDate = ticket.DueDate,
@@ -144,8 +144,11 @@ namespace TicketingSystem.DB.DBManagers
                 Category = CommonDBManager.CategoryDBManager.ConvertToViewModelObject(ticket.Category),
                 Priority = CommonDBManager.PriorityDBManager.ConvertToViewModelObject(ticket.Priority),
                 Status = CommonDBManager.StatusDBManager.ConvertToViewModelObject(ticket.Status),
-                Type = CommonDBManager.TicketTypeDBManager.ConvertToViewModelObject(ticket.TicketType1)
-                
+                Type = CommonDBManager.TicketTypeDBManager.ConvertToViewModelObject(ticket.TicketType1),
+                SubCategory = CommonDBManager.SubCategoryDBManager.ConvertToViewModelObject(ticket.SubCategory),
+                Impact = CommonDBManager.ImpactDBManager.ConvertToViewModelObject(ticket.Impact),
+                Title = ticket.Title
+
             };
             if (isDependeciesToBeLoadedWithTicket)
             {

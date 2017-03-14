@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectItem Type="Microsoft.VisualStudio.SharePoint.Module" DefaultFile="Elements.xml" SupportedTrustLevels="All" SupportedDeploymentScopes="Web, Site" xmlns="http://schemas.microsoft.com/VisualStudio/2010/SharePointTools/SharePointProjectItemModel">
+  <Files>
+    <ProjectItemFile Source="Elements.xml" Target="_Resources\" Type="ElementManifest" />
+    <ProjectItemFile Source="Ticket.css" Target="_Resources\" Type="ElementFile" />
+    <ProjectItemFile Source="NewTicket.js" Target="_Resources\" Type="ElementFile" />
+  </Files>
+</ProjectItem>

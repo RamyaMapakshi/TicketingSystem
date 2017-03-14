@@ -18,9 +18,9 @@ namespace TicketingSystem.DB
         User GetUserById(int id);
         List<Attachment> GetAttachmentsDetailByTicketId(int ticketId);
         bool SaveComment(Comment comment);
-        bool SaveAttachmentDetail(Attachment attachment);
+        int SaveAttachmentDetail(Attachment attachment);
         bool SaveAttachmentsDetail(List<Attachment> attachments);
-        bool UpsertTicketObject(Ticket ticket);
+        int UpsertTicketObject(Ticket ticket);
         List<Comment> GetCommentsByTicketId(int ticketId);
         List<ViewModel.History> GetHistoriesByTicketId(int ticketId);
         List<ViewModel.TicketType> GetAllTicketTypes();

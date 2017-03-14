@@ -9,7 +9,7 @@ namespace TicketingSystem.DB.DBManagers
 {
     public class AttachmentDBManager : IAttachmentManager
     {
-        public bool SaveAttachmentDetail(ViewModel.Attachment attachment)
+        public int SaveAttachmentDetail(ViewModel.Attachment attachment)
         {
             HistoryDBManager historyDBManager = new HistoryDBManager();
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
@@ -33,7 +33,8 @@ namespace TicketingSystem.DB.DBManagers
                     historyDBManager.CreateNewAttachmentHistory(attachment);
                 }
 
-                return Convert.ToBoolean(context.SaveChanges());
+                Convert.ToBoolean(context.SaveChanges());
+                return attachmentToBeUpdated.ID;
             }
         }
         public List<ViewModel.Attachment> GetAttachmentsDetailByTicketId(int ticketId)

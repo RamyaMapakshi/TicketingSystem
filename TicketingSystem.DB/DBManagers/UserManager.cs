@@ -7,7 +7,7 @@ using TicketingSystem.DB.IDBManagers;
 
 namespace TicketingSystem.DB.DBManagers
 {
-    public class UserManager:IUserManager
+    public class UserManager : IUserManager
     {
         public ViewModel.User UpsertUser(ViewModel.User user)
         {
@@ -15,6 +15,7 @@ namespace TicketingSystem.DB.DBManagers
             {
 
                 Database.User userToBeUpdated = ConvertToDatabaseObject(user);
+                userToBeUpdated.IsActive = true;
                 if (user.ID == 0)
                 {
                     context.Users.Add(userToBeUpdated);
@@ -45,14 +46,14 @@ namespace TicketingSystem.DB.DBManagers
         {
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {
-                return ConverToViewModelObject(context.Users.FirstOrDefault(x=>x.Email==email));
+                return ConverToViewModelObject(context.Users.FirstOrDefault(x => x.Email == email));
             }
         }
         public ViewModel.User GetUserById(int id)
         {
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {
-                return ConverToViewModelObject(context.Users.FirstOrDefault(x=>x.ID==id));
+                return ConverToViewModelObject(context.Users.FirstOrDefault(x => x.ID == id));
             }
         }
         public Database.User ConvertToDatabaseObject(ViewModel.User user)

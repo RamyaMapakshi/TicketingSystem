@@ -22,6 +22,7 @@ namespace TicketingSystem.DB.Database
             Tickets3 = new HashSet<Ticket>();
             Tickets4 = new HashSet<Ticket>();
             Tickets5 = new HashSet<Ticket>();
+            Tickets6 = new HashSet<Ticket>();
         }
 
         public int ID { get; set; }
@@ -69,5 +70,8 @@ namespace TicketingSystem.DB.Database
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ticket> Tickets5 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Ticket> Tickets6 { get; set; }
     }
 }

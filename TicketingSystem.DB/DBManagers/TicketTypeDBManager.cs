@@ -11,6 +11,10 @@ namespace TicketingSystem.DB.DBManagers
     {
         public ViewModel.TicketType ConvertToViewModelObject(Database.TicketType ticketType)
         {
+            if (ticketType==null)
+            {
+                return null;
+            }
             return new ViewModel.TicketType()
             {
                 Description = ticketType.Description,

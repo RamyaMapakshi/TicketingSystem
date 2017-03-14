@@ -54,13 +54,15 @@
     <Compile Include="Database\Attachment.cs" />
     <Compile Include="Database\Category.cs" />
     <Compile Include="Database\Comment.cs" />
+    <Compile Include="Database\Configuration.cs" />
+    <Compile Include="Database\C__MigrationHistory.cs" />
     <Compile Include="Database\EmailParsingRule.cs" />
     <Compile Include="Database\History.cs" />
     <Compile Include="Database\Impact.cs" />
     <Compile Include="Database\Priority.cs" />
     <Compile Include="Database\Status.cs" />
     <Compile Include="Database\SubCategory.cs" />
-    <Compile Include="Database\Tags.cs" />
+    <Compile Include="Database\Tag.cs" />
     <Compile Include="Database\Ticket.cs" />
     <Compile Include="Database\TicketingSystemDBContext.cs" />
     <Compile Include="Database\TicketType.cs" />

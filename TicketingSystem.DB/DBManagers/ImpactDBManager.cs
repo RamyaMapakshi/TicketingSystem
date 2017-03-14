@@ -57,6 +57,10 @@ namespace TicketingSystem.DB.DBManagers
 
         public ViewModel.Impact ConvertToViewModelObject(Database.Impact impact)
         {
+            if (impact==null)
+            {
+                return null;
+            }
             return new ViewModel.Impact()
             {
                 Description = impact.Description,

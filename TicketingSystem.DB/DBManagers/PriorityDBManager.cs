@@ -58,6 +58,10 @@ namespace TicketingSystem.DB.DBManagers
         }
         public ViewModel.Priority ConvertToViewModelObject(Database.Priority priority)
         {
+            if (priority==null)
+            {
+                return null;
+            }
             return new ViewModel.Priority()
             {
                 ID = priority.ID,
