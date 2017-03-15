@@ -27,5 +27,8 @@ namespace TicketingSystem.DB
         List<ViewModel.Status> GetAllStatus();
         List<ViewModel.Category> GetAllCategories();
         List<ViewModel.Priority> GetAllPriorities();
+        List<ViewModel.Configuration> GetAllConfigurations();
+        ViewModel.Configuration GetConfigurationByKey(string key);
+        bool UpdateConfiguration(ViewModel.Configuration config);
     }
 }

@@ -151,5 +151,20 @@ namespace TicketingSystem.DB
         {
             return CommonDBManager.TickerDbManager.GetTicketByID(id, isDependeciesToBeLoadedWithTicket);
         }
+
+        public List<Configuration> GetAllConfigurations()
+        {
+            return CommonDBManager.ConfigurationDBManager.GetAllConfigurations();
+        }
+
+        public Configuration GetConfigurationByKey(string key)
+        {
+            return CommonDBManager.ConfigurationDBManager.GetConfigurationByKey(key);
+        }
+
+        public bool UpdateConfiguration(Configuration config)
+        {
+            return CommonDBManager.ConfigurationDBManager.UpdateConfiguration(config);
+        }
     }
 }

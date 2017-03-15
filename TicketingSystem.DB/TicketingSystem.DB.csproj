@@ -69,6 +69,8 @@
     <Compile Include="Database\User.cs" />
     <Compile Include="DBManager.cs" />
     <Compile Include="DBManagers\AttachmentDBManager.cs" />
+    <Compile Include="DBManagers\ConfigurationDBManager.cs" />
+    <Compile Include="IDBManagers\IConfigurationDBManager.cs" />
     <Compile Include="IDBManagers\ISubCategoryManager.cs" />
     <Compile Include="IDBManagers\IImpactManager.cs" />
     <Compile Include="DBManagers\SubCategoryDBManager.cs" />
@@ -96,6 +98,7 @@
     <Compile Include="ViewModel\Attachment.cs" />
     <Compile Include="ViewModel\Category.cs" />
     <Compile Include="ViewModel\Comment.cs" />
+    <Compile Include="ViewModel\Configuration.cs" />
     <Compile Include="ViewModel\EmailRule.cs" />
     <Compile Include="ViewModel\History.cs" />
     <Compile Include="ViewModel\Impact.cs" />
