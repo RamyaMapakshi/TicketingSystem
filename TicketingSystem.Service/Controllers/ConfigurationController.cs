@@ -25,7 +25,7 @@ namespace TicketingSystem.Service.Controllers
         /// 
         /// </summary>
         /// <param name="config"></param>
-        /// <returns></returns>
+        /// <returns>g</returns>
         [HttpPost]
         [Route("api/Configuration/UpdateConfiguration/")]
         public bool UpdateConfiguration([FromBody]Configuration config)
