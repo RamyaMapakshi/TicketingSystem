@@ -161,6 +161,7 @@
     <Compile Include="Controllers\AttachmentController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\ConfigurationController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\OtherInfoController.cs" />
     <Compile Include="Controllers\TicketController.cs" />

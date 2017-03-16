@@ -56,6 +56,7 @@
     <Compile Include="Database\Comment.cs" />
     <Compile Include="Database\Configuration.cs" />
     <Compile Include="Database\C__MigrationHistory.cs" />
+    <Compile Include="Database\Email.cs" />
     <Compile Include="Database\EmailParsingRule.cs" />
     <Compile Include="Database\History.cs" />
     <Compile Include="Database\Impact.cs" />
