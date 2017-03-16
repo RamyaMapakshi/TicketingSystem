@@ -10,7 +10,7 @@ namespace TicketingSystem.DB
 {
     public class DBManager : IDBManager
     {
-        
+
         public bool UpsertStatus(Status status)
         {
             return CommonDBManager.StatusDBManager.UpsertStatus(status);
@@ -57,7 +57,7 @@ namespace TicketingSystem.DB
                     if (user != null)
                     {
                         var dbUser = CommonDBManager.UserManager.GetUserByEmail(user.Email);
-                        if ( dbUser== null)
+                        if (dbUser == null)
                         {
                             prop.SetValue(ticket, CommonDBManager.UserManager.UpsertUser(prop.GetValue(ticket) as User));
                         }
@@ -76,7 +76,7 @@ namespace TicketingSystem.DB
                 {
                     attachment.TicketId = ticket.ID;
                     attachment.UploadedBy = ticket.ModifiedBy;
-                    attachment.FileUrl = attachment.FileUrl.Replace("$$ticketId$$",Convert.ToString(ticket.ID));
+                    attachment.FileUrl = attachment.FileUrl.Replace("$$ticketId$$", Convert.ToString(ticket.ID));
                     SaveAttachmentDetail(attachment);
                 }
             }
@@ -94,7 +94,7 @@ namespace TicketingSystem.DB
         {
             if (comment.Attachment != null)
             {
-                comment.Attachment.ID=SaveAttachmentDetail(comment.Attachment);
+                comment.Attachment.ID = SaveAttachmentDetail(comment.Attachment);
             }
             return CommonDBManager.CommentDbManager.UpsertComment(comment);
         }
@@ -165,6 +165,52 @@ namespace TicketingSystem.DB
         public bool UpdateConfiguration(Configuration config)
         {
             return CommonDBManager.ConfigurationDBManager.UpdateConfiguration(config);
+        }
+
+        public int CreateTicketViaEmail(Email email)
+        {
+            ViewModel.Ticket ticket = new Ticket();
+            ticket.Title = email.Subject;
+            ticket.Description = email.Body;
+            ticket.IsTicketGeneratedViaEmail = true;
+            User requestedUser = CommonDBManager.UserManager.GetUserByEmail(email.From);
+            if (requestedUser == null)
+            {
+                requestedUser = new User()
+                {
+                    Email = email.From,
+                    ID = 0,
+                    IsActive = true,
+                    IsExternalUser = true
+                };
+            }
+            ticket.RequestedBy = requestedUser;
+            ticket.Modified = DateTime.Now;
+            ticket.Created = DateTime.Now;
+            ticket.ModifiedBy = requestedUser;
+            ticket.CreatedBy = requestedUser;
+            ticket.RequestedFor = null;
+            foreach (var cc in email.CC)
+            {
+                ticket.EmailsToNotify += cc+";";
+            }
+            foreach (var to in email.To)
+            {
+                ticket.EmailsToNotify += to+";";
+            }
+            List<Attachment> _attachments = email.Attachments;
+            int index = 0;
+            foreach (var attachment in email.Attachments)
+            {
+
+                _attachments[index++].ID=SaveAttachmentDetail(attachment);
+            }
+            ticket.ID= UpsertTicketObject(ticket);
+            email.TicketID = ticket.ID;
+            email.PreviousEmail = CommonDBManager.EmailDBManager.GetPreviousEmailByTicketId(ticket.ID);
+            email.Attachments = _attachments;
+            CommonDBManager.EmailDBManager.SaveEmailDetailsInDB(email);
+            return ticket.ID;
         }
     }
 }

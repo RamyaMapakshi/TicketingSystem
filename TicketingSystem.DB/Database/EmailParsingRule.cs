@@ -12,10 +12,12 @@ namespace TicketingSystem.DB.Database
         public int ID { get; set; }
 
         [Required]
-        public string ParsingRule { get; set; }
+        public string ParseRule { get; set; }
+        public string ParseProperty { get; set; }
 
         [StringLength(50)]
         public string ParseType { get; set; }
+        public string ExceptionParseProperty { get; set; }
 
         public string ExceptionType { get; set; }
 

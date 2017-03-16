@@ -20,5 +20,6 @@ namespace TicketingSystem.DB.DBManagers
         public static ImpactDBManager ImpactDBManager = new ImpactDBManager();
         public static SubCategoryDBManager SubCategoryDBManager = new SubCategoryDBManager();
         public static ConfigurationDBManager ConfigurationDBManager = new ConfigurationDBManager();
+        public static EmailDBManager EmailDBManager = new EmailDBManager();
     }
 }

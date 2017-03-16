@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using TicketingSystem.DB;
+using TicketingSystem.DB.ViewModel;
 
 namespace TicketingSystem.Service.Controllers
 {
@@ -21,10 +22,11 @@ namespace TicketingSystem.Service.Controllers
             this.dbManager = dbManager;
         }
 
-        [Route("api/Email/ParseAndInsertEmail/")]
-        public int ParseAndInsertEmail()
+        [HttpPost]
+        [Route("api/Email/CreateTicketViaEmail/")]
+        public int CreateTicketViaEmail([FromBody]Email email)
         {
-            return 0;
+            return dbManager.CreateTicketViaEmail(email)
         }
     }
 }

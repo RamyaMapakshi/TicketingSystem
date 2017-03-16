@@ -17,6 +17,7 @@ namespace TicketingSystem.DB.Database
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Configuration> Configurations { get; set; }
+        public virtual DbSet<Email> Emails { get; set; }
         public virtual DbSet<EmailParsingRule> EmailParsingRules { get; set; }
         public virtual DbSet<History> Histories { get; set; }
         public virtual DbSet<Impact> Impacts { get; set; }
