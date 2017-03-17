@@ -197,15 +197,17 @@ namespace TicketingSystem.DB
                 }
                 ticket.EmailsToNotify += to.Email+";";
             }
+            
+            ticket.ID= UpsertTicketObject(ticket);
+            email.TicketID = ticket.ID;
             List<Attachment> _attachments = email.Attachments;
             int index = 0;
             foreach (var attachment in email.Attachments)
             {
-
-                _attachments[index++].ID=SaveAttachmentDetail(attachment);
+                attachment.UploadedBy = CommonDBManager.UserManager.GetUserByEmail(email.From.Email);
+                attachment.TicketId = ticket.ID;
+                _attachments[index++].ID = SaveAttachmentDetail(attachment);
             }
-            ticket.ID= UpsertTicketObject(ticket);
-            email.TicketID = ticket.ID;
             email.PreviousEmail = CommonDBManager.EmailDBManager.GetPreviousEmailByTicketId(ticket.ID);
             email.Attachments = _attachments;
             CommonDBManager.EmailDBManager.SaveEmailDetailsInDB(email);
