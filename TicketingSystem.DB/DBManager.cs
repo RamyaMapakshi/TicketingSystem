@@ -173,24 +173,12 @@ namespace TicketingSystem.DB
             ticket.Title = email.Subject;
             ticket.Description = email.Body;
             ticket.IsTicketGeneratedViaEmail = true;
-            //User requestedUser = CommonDBManager.UserManager.GetUserByEmail(email.From.Email);
-            //if (requestedUser == null)
-            //{
-            //    requestedUser = new User()
-            //    {
-            //        Email = email.From,
-            //        ID = 0,
-            //        IsActive = true,
-            //        IsExternalUser = true
-            //    };
-            //}
             ticket.RequestedBy = email.From;
             ticket.RequestedFor = email.From;
             ticket.Modified = DateTime.Now;
             ticket.Created = DateTime.Now;
             ticket.ModifiedBy = email.From;
             ticket.CreatedBy = email.From;
-            ticket.RequestedFor = null;
             foreach (var cc in email.CC)
             {
                 var user = CommonDBManager.UserManager.GetUserByEmail(cc.Email);

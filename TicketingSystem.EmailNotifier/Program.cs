@@ -157,7 +157,7 @@ namespace TicketingSystem.EmailNotifier
                         using (StreamReader responseReader = new StreamReader(webStream))
                         {
                             string response = responseReader.ReadToEnd();
-                            Console.Out.WriteLine(response);
+                            Console.Out.WriteLine("----------Ticket created with ID:{0}--------",response);
                         }
                     }
                 }
