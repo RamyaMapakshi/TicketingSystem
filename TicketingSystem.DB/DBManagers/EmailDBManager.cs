@@ -32,14 +32,14 @@ namespace TicketingSystem.DB.DBManagers
                 emailObjToBeUpdated.DateTimeCreated = email.DateTimeCreated;
                 emailObjToBeUpdated.DateTimeReceived = email.DateTimeReceived;
                 emailObjToBeUpdated.DateTimeSent = email.DateTimeSent;
-                emailObjToBeUpdated.From = email.From;
+                emailObjToBeUpdated.From = email.From.Email;
                 emailObjToBeUpdated.TicketID = email.TicketID;
                 emailObjToBeUpdated.Subject = email.Subject;
                 emailObjToBeUpdated.PreviousEmail = email.PreviousEmail;
                 emailObjToBeUpdated.ID = email.ID;
-                foreach (var attachmentId in email.Attachments)
+                foreach (var attachment in email.Attachments)
                 {
-                    emailObjToBeUpdated.AttachmentIds += attachmentId + ",";
+                    emailObjToBeUpdated.AttachmentIds += attachment.ID + ",";
                 }
                 foreach (var to in email.To)
                 {
@@ -71,7 +71,7 @@ namespace TicketingSystem.DB.DBManagers
                 TicketID = email.TicketID,
                 Subject = email.Subject,
                 PreviousEmail = email.PreviousEmail,
-                From = email.From
+                //From = email.From
             };
             //foreach (var attachmentId in email.AttachmentIds.Split(';'))
             //{

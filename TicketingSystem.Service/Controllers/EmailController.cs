@@ -26,7 +26,7 @@ namespace TicketingSystem.Service.Controllers
         [Route("api/Email/CreateTicketViaEmail/")]
         public int CreateTicketViaEmail([FromBody]Email email)
         {
-            return dbManager.CreateTicketViaEmail(email)
+            return dbManager.CreateTicketViaEmail(email);
         }
     }
 }

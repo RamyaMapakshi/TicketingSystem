@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketingSystem.Service", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketingSystem.SharePointApp", "TicketingSystem.SharePointApp\TicketingSystem.SharePointApp.csproj", "{D1EFEEAA-5E91-48D7-977A-CAC2C788272B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketingSystem.EmailNotifier", "TicketingSystem.EmailNotifier\TicketingSystem.EmailNotifier.csproj", "{2E591619-769F-48A6-9981-359C6BCD20A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{D1EFEEAA-5E91-48D7-977A-CAC2C788272B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1EFEEAA-5E91-48D7-977A-CAC2C788272B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D1EFEEAA-5E91-48D7-977A-CAC2C788272B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{2E591619-769F-48A6-9981-359C6BCD20A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E591619-769F-48A6-9981-359C6BCD20A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E591619-769F-48A6-9981-359C6BCD20A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E591619-769F-48A6-9981-359C6BCD20A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -173,30 +173,41 @@ namespace TicketingSystem.DB
             ticket.Title = email.Subject;
             ticket.Description = email.Body;
             ticket.IsTicketGeneratedViaEmail = true;
-            User requestedUser = CommonDBManager.UserManager.GetUserByEmail(email.From);
-            if (requestedUser == null)
-            {
-                requestedUser = new User()
-                {
-                    Email = email.From,
-                    ID = 0,
-                    IsActive = true,
-                    IsExternalUser = true
-                };
-            }
-            ticket.RequestedBy = requestedUser;
+            //User requestedUser = CommonDBManager.UserManager.GetUserByEmail(email.From.Email);
+            //if (requestedUser == null)
+            //{
+            //    requestedUser = new User()
+            //    {
+            //        Email = email.From,
+            //        ID = 0,
+            //        IsActive = true,
+            //        IsExternalUser = true
+            //    };
+            //}
+            ticket.RequestedBy = email.From;
+            ticket.RequestedFor = email.From;
             ticket.Modified = DateTime.Now;
             ticket.Created = DateTime.Now;
-            ticket.ModifiedBy = requestedUser;
-            ticket.CreatedBy = requestedUser;
+            ticket.ModifiedBy = email.From;
+            ticket.CreatedBy = email.From;
             ticket.RequestedFor = null;
             foreach (var cc in email.CC)
             {
-                ticket.EmailsToNotify += cc+";";
+                var user = CommonDBManager.UserManager.GetUserByEmail(cc.Email);
+                if (user==null)
+                {
+                    CommonDBManager.UserManager.UpsertUser(cc);
+                }
+                ticket.EmailsToNotify += cc.Email+";";
             }
             foreach (var to in email.To)
             {
-                ticket.EmailsToNotify += to+";";
+                var user = CommonDBManager.UserManager.GetUserByEmail(to.Email);
+                if (user == null)
+                {
+                    CommonDBManager.UserManager.UpsertUser(to);
+                }
+                ticket.EmailsToNotify += to.Email+";";
             }
             List<Attachment> _attachments = email.Attachments;
             int index = 0;
