@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace TicketingSystem.DB.ViewModel
 {
@@ -18,6 +19,6 @@ namespace TicketingSystem.DB.ViewModel
 
         public User ModifiedBy { get; set; }
         public int TicketId { get; set; }
-        public Attachment Attachment { get; set; }
+        public List<Attachment> Attachments { get; set; }
     }
 }

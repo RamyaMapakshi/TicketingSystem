@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using TicketingSystem.DB.IDBManagers;
@@ -14,8 +16,8 @@ namespace TicketingSystem.DB.DBManagers
         {
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {
-                var _email= context.Emails.Where(x => x.TicketID == ticketId).OrderByDescending(x => x.ID).FirstOrDefault();
-                if (_email==null)
+                var _email = context.Emails.Where(x => x.TicketID == ticketId).OrderByDescending(x => x.ID).FirstOrDefault();
+                if (_email == null)
                 {
                     return 0;
                 }
@@ -43,15 +45,52 @@ namespace TicketingSystem.DB.DBManagers
                 }
                 foreach (var to in email.To)
                 {
-                    emailObjToBeUpdated.To += to + ",";
+                    emailObjToBeUpdated.To += to.Email + ",";
                 }
                 foreach (var cc in email.CC)
                 {
-                    emailObjToBeUpdated.CC += cc + ",";
+                    emailObjToBeUpdated.CC += cc.Email + ",";
                 }
                 context.Emails.Add(emailObjToBeUpdated);
                 context.SaveChanges();
                 return true;
+            }
+        }
+
+        public bool SendEmail(Email email)
+        {
+            MailMessage message = new MailMessage();
+            foreach (var to in email.To)
+            {
+                if (!string.IsNullOrEmpty(to.Email))
+                {
+                    message.To.Add(to.Email);
+                }
+            }
+            message.From = new MailAddress(email.From.Email);
+            message.Body = "<style>div,table{font-family: Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;}</style>" + email.Body;
+            message.IsBodyHtml = true;
+            message.Subject = email.Subject;
+            foreach (var cc in email.CC)
+            {
+                if (!string.IsNullOrEmpty(cc.Email))
+                {
+                    message.CC.Add(cc.Email);
+                }
+            }
+            using (SmtpClient smtp = new SmtpClient("kci-coloca01.corp.kci.com", 25))
+            {
+                try
+                {
+                    smtp.Credentials = new NetworkCredential("technoverttest2@kci.com", "1qaz2wsx");
+                    smtp.Send(message);
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    //ex
+                    return false;
+                }
             }
         }
 
@@ -61,7 +100,7 @@ namespace TicketingSystem.DB.DBManagers
             {
                 return null;
             }
-            ViewModel.Email _email= new ViewModel.Email()
+            ViewModel.Email _email = new ViewModel.Email()
             {
                 ID = email.ID,
                 Body = email.Body,

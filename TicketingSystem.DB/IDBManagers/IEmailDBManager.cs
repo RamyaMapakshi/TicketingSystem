@@ -9,6 +9,8 @@ namespace TicketingSystem.DB.IDBManagers
     public interface IEmailDBManager
     {
         bool SaveEmailDetailsInDB(ViewModel.Email email);
+
+        bool SendEmail(ViewModel.Email email);
         int GetPreviousEmailByTicketId(int ticketId);
     }
 }

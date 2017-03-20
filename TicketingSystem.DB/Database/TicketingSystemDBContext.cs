@@ -18,6 +18,7 @@ namespace TicketingSystem.DB.Database
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Configuration> Configurations { get; set; }
         public virtual DbSet<Email> Emails { get; set; }
+        public virtual DbSet<EmailTemplate> EmailTemplates { get; set; }
         public virtual DbSet<EmailParsingRule> EmailParsingRules { get; set; }
         public virtual DbSet<History> Histories { get; set; }
         public virtual DbSet<Impact> Impacts { get; set; }
@@ -26,6 +27,7 @@ namespace TicketingSystem.DB.Database
         public virtual DbSet<SubCategory> SubCategories { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
+        public virtual DbSet<TicketTemplate> TicketTemplates { get; set; }
         public virtual DbSet<TicketType> TicketTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
 

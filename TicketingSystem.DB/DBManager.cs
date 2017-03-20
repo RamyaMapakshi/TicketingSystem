@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 using TicketingSystem.DB.DBManagers;
 using TicketingSystem.DB.ViewModel;
 
@@ -92,9 +94,15 @@ namespace TicketingSystem.DB
         }
         public bool SaveComment(Comment comment)
         {
-            if (comment.Attachment != null)
+            if (comment.Attachments != null)
             {
-                comment.Attachment.ID = SaveAttachmentDetail(comment.Attachment);
+                List<Attachment> _attachments = new List<Attachment>();
+                foreach (var attachment in comment.Attachments)
+                {
+                    attachment.ID = SaveAttachmentDetail(attachment);
+                    _attachments.Add(attachment);
+                }
+                comment.Attachments = _attachments;
             }
             return CommonDBManager.CommentDbManager.UpsertComment(comment);
         }
@@ -166,12 +174,18 @@ namespace TicketingSystem.DB
         {
             return CommonDBManager.ConfigurationDBManager.UpdateConfiguration(config);
         }
-
-        public int CreateTicketViaEmail(Email email)
+        private string ExtractText(string html)
         {
-            ViewModel.Ticket ticket = new Ticket();
+            Regex reg = new Regex("<[^>]+>", RegexOptions.IgnoreCase);
+            string s = reg.Replace(html, " ");
+            s = HttpUtility.HtmlDecode(s);
+            return s;
+        }
+        private int CreateTicketViaEmail(Email email)
+        {
+            ViewModel.Ticket ticket = new ViewModel.Ticket();
             ticket.Title = email.Subject;
-            ticket.Description = email.Body;
+            ticket.Description = ExtractText(email.Body);
             ticket.IsTicketGeneratedViaEmail = true;
             ticket.RequestedBy = email.From;
             ticket.RequestedFor = email.From;
@@ -182,11 +196,11 @@ namespace TicketingSystem.DB
             foreach (var cc in email.CC)
             {
                 var user = CommonDBManager.UserManager.GetUserByEmail(cc.Email);
-                if (user==null)
+                if (user == null)
                 {
                     CommonDBManager.UserManager.UpsertUser(cc);
                 }
-                ticket.EmailsToNotify += cc.Email+";";
+                ticket.EmailsToNotify += cc.Email + ";";
             }
             foreach (var to in email.To)
             {
@@ -195,23 +209,82 @@ namespace TicketingSystem.DB
                 {
                     CommonDBManager.UserManager.UpsertUser(to);
                 }
-                ticket.EmailsToNotify += to.Email+";";
+                ticket.EmailsToNotify += to.Email + ";";
             }
+
+            return UpsertTicketObject(ticket);
+        }
+        public ViewModel.Email UpsertTicketViaEmail(Email email)
+        {
+            int ticketId = 0;
+            bool isNewTicket = true;
+            List<Attachment> _attachments = new List<Attachment>();
             
-            ticket.ID= UpsertTicketObject(ticket);
-            email.TicketID = ticket.ID;
-            List<Attachment> _attachments = email.Attachments;
-            int index = 0;
-            foreach (var attachment in email.Attachments)
+            if (!CommonDBManager.EmailParserDBManager.CheckIfValidEmail(email))
             {
-                attachment.UploadedBy = CommonDBManager.UserManager.GetUserByEmail(email.From.Email);
-                attachment.TicketId = ticket.ID;
-                _attachments[index++].ID = SaveAttachmentDetail(attachment);
+                ticketId = CommonDBManager.EmailParserDBManager.CheckIfEmailIsForAlreadyCreatedTicketFromSubjectAndReturnTicketId(email.Subject);
+                if (ticketId != 0)
+                {
+                    User user = CommonDBManager.UserManager.GetUserByEmail(email.From.Email);
+                    if (user == null)
+                    {
+                        user = CommonDBManager.UserManager.UpsertUser(email.From);
+                    }
+                    foreach (var attachment in email.Attachments)
+                    {
+                        attachment.UploadedBy = user;
+                        attachment.TicketId = ticketId;
+                        attachment.ID = SaveAttachmentDetail(attachment);
+                        _attachments.Add(attachment);
+                    }
+                    email.Attachments = _attachments;
+                    SaveComment(new Comment()
+                    {
+                        ID = 0,
+                        Created = DateTime.Now,
+                        CreatedBy = user,
+                        ModifiedBy = user,
+                        Modified = DateTime.Now,
+                        IsPrivate = false,
+                        TicketId = ticketId,
+                        Details = ExtractText(email.Body),
+                        Attachments = email.Attachments
+                    });
+                    isNewTicket = false;
+                }
             }
-            email.PreviousEmail = CommonDBManager.EmailDBManager.GetPreviousEmailByTicketId(ticket.ID);
-            email.Attachments = _attachments;
+            else
+            {
+                ticketId = CreateTicketViaEmail(email);
+                foreach (var attachment in email.Attachments)
+                {
+                    attachment.UploadedBy = CommonDBManager.UserManager.GetUserByEmail(email.From.Email);
+                    attachment.TicketId = ticketId;
+                    attachment.ID = SaveAttachmentDetail(attachment);
+                    _attachments.Add(attachment);
+                }
+                email.Attachments = _attachments;
+            }
+            if (ticketId == 0)
+            {
+                return null;
+            }
+
+            email.TicketID = ticketId;
+            
+            email.PreviousEmail = CommonDBManager.EmailDBManager.GetPreviousEmailByTicketId(ticketId);
             CommonDBManager.EmailDBManager.SaveEmailDetailsInDB(email);
-            return ticket.ID;
+
+            if (isNewTicket)
+            {
+                email.Body = string.Format("Hi {0},<br/><br/>Ticket created with ID {1}.<br/>Please follow/reply to this thread for further assistance.<br/><br/>Thanks,<br/>Support Team", email.From.Name, string.Format("TKT{0:000000}", ticketId));
+                email.Subject =string.Format( "RE: {1} -TKT{0:000000}", ticketId,email.Subject);
+            }
+            else
+            {
+                email.Body = "Thank You.<br/> Your response has been saved.";
+            }
+            return email;
         }
     }
 }

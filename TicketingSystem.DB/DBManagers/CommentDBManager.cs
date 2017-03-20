@@ -17,7 +17,7 @@ namespace TicketingSystem.DB.DBManagers
 
                 Database.Comment commentToBeUpdated = new Database.Comment();
 
-                if (comment.ID!=0)
+                if (comment.ID != 0)
                 {
                     commentToBeUpdated = context.Comments.FirstOrDefault(x => x.ID == comment.ID);
                 }
@@ -30,7 +30,10 @@ namespace TicketingSystem.DB.DBManagers
                 commentToBeUpdated.Modified = comment.Modified;
                 commentToBeUpdated.ModifiedBy = comment.ModifiedBy.ID;
                 commentToBeUpdated.Ticket = comment.TicketId;
-                commentToBeUpdated.AttachmentId = comment.Attachment == null ? (int?)null : comment.Attachment.ID;
+                foreach (var attachemnt in comment.Attachments)
+                {
+                    commentToBeUpdated.AttachmentIds += attachemnt.ID + ",";
+                }
 
                 if (comment.ID == 0)
                 {
@@ -71,7 +74,7 @@ namespace TicketingSystem.DB.DBManagers
             UserManager usermanager = new UserManager();
             AttachmentDBManager attachmentDBmanager = new AttachmentDBManager();
             TicketDBManager ticketDBManager = new TicketDBManager();
-            return new ViewModel.Comment()
+            var _comment = new ViewModel.Comment()
             {
                 ID = comment.ID,
                 IsPrivate = comment.IsPrivate,
@@ -81,8 +84,17 @@ namespace TicketingSystem.DB.DBManagers
                 ModifiedBy = usermanager.ConverToViewModelObject(comment._ModifiedBy),
                 Created = comment.Created,
                 Modified = comment.Modified,
-                Attachment = attachmentDBmanager.ConvertToViewModelObject(comment._Ticket.Attachments.FirstOrDefault(x => x.ID == comment.AttachmentId))
             };
+            var _attachment = attachmentDBmanager.GetAttachmentsDetailByTicketId(comment.Ticket);
+            foreach (var attachmentId in comment.AttachmentIds.Split(','))
+            {
+                var attachment = _attachment.FirstOrDefault(x => Convert.ToString(x.ID) == attachmentId);
+                if (attachment != null)
+                {
+                    _comment.Attachments.Add(attachment);
+                }
+            }
+            return _comment;
         }
     }
 }

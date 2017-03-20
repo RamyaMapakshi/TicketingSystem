@@ -21,7 +21,7 @@ namespace TicketingSystem.DB.Database
 
         public int CreatedBy { get; set; }
 
-        public int? AttachmentId { get; set; }
+        public string AttachmentIds { get; set; }
 
         public int ModifiedBy { get; set; }
 

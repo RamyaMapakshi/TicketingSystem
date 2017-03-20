@@ -30,6 +30,6 @@ namespace TicketingSystem.DB
         List<ViewModel.Configuration> GetAllConfigurations();
         ViewModel.Configuration GetConfigurationByKey(string key);
         bool UpdateConfiguration(ViewModel.Configuration config);
-        int CreateTicketViaEmail(ViewModel.Email email);
+        ViewModel.Email UpsertTicketViaEmail(ViewModel.Email email);
     }
 }

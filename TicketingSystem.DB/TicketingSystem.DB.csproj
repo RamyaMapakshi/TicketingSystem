@@ -43,6 +43,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,6 +59,7 @@
     <Compile Include="Database\C__MigrationHistory.cs" />
     <Compile Include="Database\Email.cs" />
     <Compile Include="Database\EmailParsingRule.cs" />
+    <Compile Include="Database\EmailTemplate.cs" />
     <Compile Include="Database\History.cs" />
     <Compile Include="Database\Impact.cs" />
     <Compile Include="Database\Priority.cs" />
@@ -66,12 +68,14 @@
     <Compile Include="Database\Tag.cs" />
     <Compile Include="Database\Ticket.cs" />
     <Compile Include="Database\TicketingSystemDBContext.cs" />
+    <Compile Include="Database\TicketTemplate.cs" />
     <Compile Include="Database\TicketType.cs" />
     <Compile Include="Database\User.cs" />
     <Compile Include="DBManager.cs" />
     <Compile Include="DBManagers\AttachmentDBManager.cs" />
     <Compile Include="DBManagers\ConfigurationDBManager.cs" />
     <Compile Include="DBManagers\EmailDBManager.cs" />
+    <Compile Include="DBManagers\EmailParserDBManager.cs" />
     <Compile Include="IDBManagers\IConfigurationDBManager.cs" />
     <Compile Include="IDBManagers\IEmailDBManager.cs" />
     <Compile Include="IDBManagers\ISubCategoryManager.cs" />
@@ -103,8 +107,9 @@
     <Compile Include="ViewModel\Comment.cs" />
     <Compile Include="ViewModel\Configuration.cs" />
     <Compile Include="ViewModel\Email.cs" />
-    <Compile Include="ViewModel\EmailRule.cs" />
+    <Compile Include="ViewModel\EmailParseRule.cs" />
     <Compile Include="ViewModel\History.cs" />
+    <Compile Include="IDBManagers\IEmailParserDBManager.cs" />
     <Compile Include="ViewModel\Impact.cs" />
     <Compile Include="ViewModel\Priority.cs" />
     <Compile Include="ViewModel\Status.cs" />
