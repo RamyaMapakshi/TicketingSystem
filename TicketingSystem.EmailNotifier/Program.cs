@@ -26,8 +26,6 @@ namespace TicketingSystem.EmailNotifier
         static void Main(string[] args)
         {
             service.Credentials = new WebCredentials(SupportMailBoxEmailId, SupportMailBoxEmailPassword);
-            //service.TraceEnabled = true;
-            //service.TraceFlags = TraceFlags.All;
             service.AutodiscoverUrl(SupportMailBoxEmailId, RedirectionUrlValidationCallback);
             CheckForUnreadEmailsAndUpsertTicket(service);
             SetStreamingNotifications(service);

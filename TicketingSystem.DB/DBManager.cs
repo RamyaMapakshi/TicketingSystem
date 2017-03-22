@@ -49,8 +49,24 @@ namespace TicketingSystem.DB
         {
             return CommonDBManager.SubCategoryDBManager.GetAllsubCategories();
         }
+        private bool IsUsersSame(User user, User dbUser)
+        {
+            bool isUsersSame = true;
+
+            foreach (var prop in user.GetType().GetProperties())
+            {
+                if (!prop.GetValue(user).Equals(dbUser.GetType().GetProperties().FirstOrDefault(x => x.Name == prop.Name).GetValue(dbUser)))
+                {
+                    isUsersSame = false;
+                }
+            }
+
+            return isUsersSame;
+        }
         public int UpsertTicketObject(Ticket ticket)
         {
+
+            bool isNewTicket = ticket.ID == 0 ? true : false;
             foreach (var prop in ticket.GetType().GetProperties())
             {
                 if (prop.PropertyType == new User().GetType())
@@ -65,8 +81,7 @@ namespace TicketingSystem.DB
                         }
                         else
                         {
-                            dbUser.PhoneNumber = user.PhoneNumber;
-                            prop.SetValue(ticket, dbUser);
+                            prop.SetValue(ticket, IsUsersSame(user, dbUser) ? dbUser : CommonDBManager.UserManager.UpsertUser(user));
                         }
                     }
                 }
@@ -78,7 +93,7 @@ namespace TicketingSystem.DB
                 {
                     attachment.TicketId = ticket.ID;
                     attachment.UploadedBy = ticket.ModifiedBy;
-                    attachment.FileUrl = attachment.FileUrl.Replace("$$ticketId$$", Convert.ToString(ticket.ID));
+                    attachment.FileUrl = attachment.FileUrl.Replace("$$ticketId$$", string.Format("{0:000000}", ticket.ID));
                     SaveAttachmentDetail(attachment);
                 }
             }
@@ -90,7 +105,24 @@ namespace TicketingSystem.DB
                     SaveComment(comment);
                 }
             }
+            if (isNewTicket && ticket.IsTicketGeneratedViaEmail.Value)
+                return ticket.ID;
+            SendEmail(ticket, isNewTicket);
             return ticket.ID;
+        }
+        private void SendEmail(Ticket ticket, bool isNewTicket = true)
+        {
+            var emailTemplate = CommonDBManager.EmailDBManager.GetEmailTemplateByTitle(isNewTicket ? "NewWebTicket" : "");
+            Email email = new Email();
+            email.Subject = string.Format(emailTemplate.Subject, ticket.ID, ticket.Title);
+            email.Body = string.Format(emailTemplate.Body, ticket.RequestedBy.Name, ticket.ID);
+            email.To.Add(ticket.RequestedBy);
+            email.From = new User() { Email = "technoverttest2@kci.com" };
+            foreach (var ccEmail in ticket.EmailsToNotify.Split(';'))
+            {
+                email.CC.Add(new User() { Email = ccEmail });
+            }
+            CommonDBManager.EmailDBManager.SendEmail(email);
         }
         public bool SaveComment(Comment comment)
         {
@@ -105,6 +137,10 @@ namespace TicketingSystem.DB
                 comment.Attachments = _attachments;
             }
             return CommonDBManager.CommentDbManager.UpsertComment(comment);
+        }
+        public List<ViewModel.TicketTemplate> GetAllTicketTemplates()
+        {
+            return CommonDBManager.TickerDbManager.GetAllTicketTemplates();
         }
         public int SaveAttachmentDetail(Attachment attachment)
         {
@@ -219,7 +255,7 @@ namespace TicketingSystem.DB
             int ticketId = 0;
             bool isNewTicket = true;
             List<Attachment> _attachments = new List<Attachment>();
-            
+
             if (!CommonDBManager.EmailParserDBManager.CheckIfValidEmail(email))
             {
                 ticketId = CommonDBManager.EmailParserDBManager.CheckIfEmailIsForAlreadyCreatedTicketFromSubjectAndReturnTicketId(email.Subject);
@@ -271,14 +307,14 @@ namespace TicketingSystem.DB
             }
 
             email.TicketID = ticketId;
-            
+
             email.PreviousEmail = CommonDBManager.EmailDBManager.GetPreviousEmailByTicketId(ticketId);
             CommonDBManager.EmailDBManager.SaveEmailDetailsInDB(email);
 
             if (isNewTicket)
             {
                 email.Body = string.Format("Hi {0},<br/><br/>Ticket created with ID {1}.<br/>Please follow/reply to this thread for further assistance.<br/><br/>Thanks,<br/>Support Team", email.From.Name, string.Format("TKT{0:000000}", ticketId));
-                email.Subject =string.Format( "RE: {1} -TKT{0:000000}", ticketId,email.Subject);
+                email.Subject = string.Format("RE: {1} -TKT{0:000000}", ticketId, email.Subject);
             }
             else
             {

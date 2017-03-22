@@ -108,6 +108,7 @@
     <Compile Include="ViewModel\Configuration.cs" />
     <Compile Include="ViewModel\Email.cs" />
     <Compile Include="ViewModel\EmailParseRule.cs" />
+    <Compile Include="ViewModel\EmailTemplate.cs" />
     <Compile Include="ViewModel\History.cs" />
     <Compile Include="IDBManagers\IEmailParserDBManager.cs" />
     <Compile Include="ViewModel\Impact.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="ViewModel\Status.cs" />
     <Compile Include="ViewModel\SubCategory.cs" />
     <Compile Include="ViewModel\Ticket.cs" />
+    <Compile Include="ViewModel\TicketTemplate.cs" />
     <Compile Include="ViewModel\TicketType.cs" />
     <Compile Include="ViewModel\User.cs" />
   </ItemGroup>

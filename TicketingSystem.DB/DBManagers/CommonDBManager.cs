@@ -22,6 +22,5 @@ namespace TicketingSystem.DB.DBManagers
         public static ConfigurationDBManager ConfigurationDBManager = new ConfigurationDBManager();
         public static EmailDBManager EmailDBManager = new EmailDBManager();
         public static EmailParserDBManager EmailParserDBManager = new EmailParserDBManager();
-
     }
 }

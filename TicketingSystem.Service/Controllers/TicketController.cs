@@ -33,7 +33,18 @@ namespace TicketingSystem.Service.Controllers
         {
             return dbManager.UpsertTicketObject(ticket.CreateTicketFromBasicTicketInfo());
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         
+        [Route("api/Ticket/GetAllTicketTemplates/")]
+        public List<TicketTemplate> GetAllTicketTemplates()
+        {
+            return dbManager.GetAllTicketTemplates();
+        }
+
         /// <summary>
         /// 
         /// </summary>

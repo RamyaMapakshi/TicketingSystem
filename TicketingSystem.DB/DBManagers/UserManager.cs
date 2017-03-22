@@ -46,7 +46,7 @@ namespace TicketingSystem.DB.DBManagers
         {
             using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
             {
-                return ConverToViewModelObject(context.Users.FirstOrDefault(x => x.Email == email));
+                return ConverToViewModelObject(context.Users.OrderByDescending(x=>x.ID).FirstOrDefault(x => x.Email == email));
             }
         }
         public ViewModel.User GetUserById(int id)

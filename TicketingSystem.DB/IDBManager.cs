@@ -31,5 +31,6 @@ namespace TicketingSystem.DB
         ViewModel.Configuration GetConfigurationByKey(string key);
         bool UpdateConfiguration(ViewModel.Configuration config);
         ViewModel.Email UpsertTicketViaEmail(ViewModel.Email email);
+        List<ViewModel.TicketTemplate> GetAllTicketTemplates();
     }
 }

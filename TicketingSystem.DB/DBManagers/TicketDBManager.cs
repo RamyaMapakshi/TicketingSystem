@@ -113,7 +113,32 @@ namespace TicketingSystem.DB.DBManagers
                 return ConvertToViewModelObject(context.Tickets.FirstOrDefault(x => x.ID == id), isDependeciesToBeLoadedWithTicket);
             }
         }
-
+        public List<ViewModel.TicketTemplate> GetAllTicketTemplates()
+        {
+            List<ViewModel.TicketTemplate> ticketTemplates = new List<ViewModel.TicketTemplate>();
+            using (TicketingSystemDBContext context = new TicketingSystemDBContext())
+            {
+                foreach (var template in context.TicketTemplates)
+                {
+                    ticketTemplates.Add(ConvertToViewModelObject(template));
+                }
+            }
+            return ticketTemplates;
+        }
+        private ViewModel.TicketTemplate ConvertToViewModelObject(Database.TicketTemplate template)
+        {
+            if (template == null)
+            {
+                return null;
+            }
+            return new ViewModel.TicketTemplate()
+            {
+                ID = template.ID,
+                Title = template.Title,
+                Description = template.Description,
+                IsActive = template.IsActive
+            };
+        }
         public ViewModel.Ticket ConvertToViewModelObject(Database.Ticket ticket, bool isDependeciesToBeLoadedWithTicket = true)
         {
             ViewModel.Ticket ticketToBeReturned = new ViewModel.Ticket()

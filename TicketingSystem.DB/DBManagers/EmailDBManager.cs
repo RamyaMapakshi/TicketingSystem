@@ -93,7 +93,42 @@ namespace TicketingSystem.DB.DBManagers
                 }
             }
         }
-
+        public List<ViewModel.EmailTemplate> GetAllEmailTemplates()
+        {
+            List<ViewModel.EmailTemplate> emailTempates = new List<EmailTemplate>();
+            using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
+            {
+                foreach (var template in context.EmailTemplates)
+                {
+                    emailTempates.Add(ConvertToViewModelObject(template));
+                }
+            }
+            return emailTempates;
+        }
+        public ViewModel.EmailTemplate GetEmailTemplateByTitle(string title)
+        {
+            using (Database.TicketingSystemDBContext context = new Database.TicketingSystemDBContext())
+            {
+                return ConvertToViewModelObject(context.EmailTemplates.FirstOrDefault(x => x.Title == title));
+            }
+        }
+        private ViewModel.EmailTemplate ConvertToViewModelObject(Database.EmailTemplate template)
+        {
+            if (template == null)
+            {
+                return null;
+            }
+            return new ViewModel.EmailTemplate()
+            {
+                BCC = template.BCC,
+                Body = template.Body,
+                CC = template.CC,
+                ID = template.ID,
+                IsActive = template.IsActive,
+                Subject = template.Subject,
+                Title = template.Title
+            };
+        }
         private ViewModel.Email ConvertToViewModelObject(Database.Email email)
         {
             if (email == null)
